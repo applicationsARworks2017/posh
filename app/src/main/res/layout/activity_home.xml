@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryBG"
+    android:id="@+id/relative_layout1"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start"
+    xmlns:design="http://schemas.android.com/apk/res-auto"
+    tools:context=".Activity.HomeActivity">
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/primaryBG">
+    </FrameLayout>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemIconTint="@color/colorPrimary"
+        app:itemTextColor="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        design:menu="@menu/activity_main_drawer" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:visibility="gone"
+        android:background="@color/colorWhite"
+        android:layout_alignParentBottom="true">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/home"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/menu"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/orders"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/user_pro"/>
+    </LinearLayout>
+
+</RelativeLayout>

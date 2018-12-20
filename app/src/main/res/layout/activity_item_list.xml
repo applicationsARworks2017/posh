@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ItemList">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:id="@+id/itemlist_tool"></android.support.v7.widget.Toolbar>
+    <SearchView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_alignParentRight="true"
+        android:queryHint="Search Items"
+        android:id="@+id/item_search"></SearchView>
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/itemgridview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:columnWidth="90dp"
+        android:numColumns="auto_fit"
+        android:layout_marginBottom="5dp"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:layout_below="@+id/item_search"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        />
+</RelativeLayout>

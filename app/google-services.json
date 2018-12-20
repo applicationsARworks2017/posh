@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "220593328757",
+    "firebase_url": "https://quickfurniture-d4ab9.firebaseio.com",
+    "project_id": "quickfurniture-d4ab9",
+    "storage_bucket": "quickfurniture-d4ab9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220593328757:android:002205ce202c42c5",
+        "android_client_info": {
+          "package_name": "com.order.quickfurniture"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220593328757-fnp62p7nnse9nblnu565sn9g5n3inhd3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.order.quickfurniture",
+            "certificate_hash": "9b092053c99bf6ec2849a0d8c7578fdfd27b6287"
+          }
+        },
+        {
+          "client_id": "220593328757-jahg07l5p2cm4fhjh16hjglduv9a7n5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqj5IoXAvb6x8Z7AHaoLndMHT4kko5ilw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220593328757-jahg07l5p2cm4fhjh16hjglduv9a7n5p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

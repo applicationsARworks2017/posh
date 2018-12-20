@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@android:style/Widget.ActionButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/badge_layout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/relative_layout_item_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:backgroundTint="@color/colorPrimary"
+                android:background="@mipmap/baseline_email_black_24" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/badge_notification_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/relative_layout_item_count"
+            android:background="@android:drawable/ic_notification_overlay"
+            android:text="27"
+            android:visibility="gone"
+            android:textColor="#FFF"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/badge_layout2"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/badge_layout1">
+
+        <RelativeLayout
+            android:id="@+id/relative_layout_item_count1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="20dip"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_height="20dip"
+                android:background="@mipmap/baseline_shopping_cart_black_24" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/badge_notification_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/relative_layout_item_count1"
+            android:background="@android:drawable/ic_notification_overlay"
+            android:text="12"
+            android:visibility="gone"
+            android:textColor="#FFF"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/badge_layout3"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/badge_layout2">
+
+        <RelativeLayout
+            android:id="@+id/relative_layout_item_count2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:backgroundTint="@color/colorPrimary"
+                android:background="@mipmap/baseline_notifications_black_24" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/badge_notification_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/relative_layout_item_count2"
+            android:background="@android:drawable/ic_notification_overlay"
+            android:text="5"
+            android:layout_marginTop="-2dp"
+            android:textColor="#FFF"
+            android:textSize="8sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/badge_layout4"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/badge_layout3">
+
+        <RelativeLayout
+            android:id="@+id/relative_layout_item_count4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:backgroundTint="@color/colorPrimary"
+                android:background="@mipmap/baseline_crop_free_black_24" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/badge_notification_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/relative_layout_item_count4"
+            android:background="@android:drawable/ic_notification_overlay"
+            android:text="5"
+            android:visibility="gone"
+            android:textColor="#FFF"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+
+
+
+</RelativeLayout>
