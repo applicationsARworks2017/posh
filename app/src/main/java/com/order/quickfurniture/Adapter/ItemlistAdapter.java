@@ -16,6 +16,8 @@ import com.order.quickfurniture.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ItemlistAdapter extends BaseAdapter {
     ArrayList<Items> list;
@@ -66,7 +68,18 @@ public class ItemlistAdapter extends BaseAdapter {
 
         holder.item_name.setText(_pos.getName());
         holder.cost.setText("\u20B9 "+_pos.getActual_price());
-        Picasso.with(_context).load(_pos.getPhoto()).into(holder.item_image);
+
+        if(_pos.getPhoto().contains(",")) {
+            List<String> imageList = Arrays.asList(_pos.getPhoto().split(","));
+            if(imageList.get(1)== null || imageList.get(1) == "" || imageList.get(1).contentEquals("") ){
+                holder.item_image.setImageResource(R.drawable.error);
+
+            }
+            else{
+                Picasso.with(_context)
+                        .load(imageList.get(1)).into(holder.item_image);
+            }
+        }
 
 
         return convertView;

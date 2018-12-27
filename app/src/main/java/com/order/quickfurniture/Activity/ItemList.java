@@ -1,5 +1,7 @@
 package com.order.quickfurniture.Activity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SearchView;
 
@@ -39,6 +42,7 @@ public class ItemList extends AppCompatActivity {
     SearchView searchView;
     ArrayList<Items> itemsArrayList;
     ItemlistAdapter adapter;
+    String _id,_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,18 @@ public class ItemList extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        itemgridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Items item = (Items) adapterView.getItemAtPosition(i);
+                _id = item.getId();
+                _name = item.getName();
+                Intent intent = new Intent(getApplication(),ItemDetails.class);
+                intent.putExtra("_ID",_id);
+                intent.putExtra("_NAME",_name);
+                startActivity(intent);
             }
         });
 
@@ -89,10 +105,13 @@ public class ItemList extends AppCompatActivity {
         private static final String TAG = "getcategoryList";
         int server_status;
         String server_message;
+        ProgressDialog progressDialog = null;
 
         @Override
         protected void onPreExecute() {
-
+            if(progressDialog == null) {
+                progressDialog = ProgressDialog.show(ItemList.this, "Loading Items", "Please wait...");
+            }
         }
         @Override
         protected Void doInBackground(String... params) {
@@ -215,6 +234,7 @@ public class ItemList extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void data) {
             super.onPostExecute(data);
+            progressDialog.dismiss();
             if(server_status==1) {
                 adapter = new ItemlistAdapter(ItemList.this,itemsArrayList );
                 itemgridview.setAdapter(adapter);

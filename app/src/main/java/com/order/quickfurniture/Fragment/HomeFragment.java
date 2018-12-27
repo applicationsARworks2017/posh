@@ -540,10 +540,23 @@ myRoot.addView(a);
             a.addView(imageView);
             if(arrivalsArrayList.get(j).getImage().contains(",")) {
                 List<String> imageList = Arrays.asList(arrivalsArrayList.get(j).getImage().split(","));
-                Picasso.with(getActivity()).load(imageList.get(1)).into(imageView);
+
+                if(imageList.get(1)== null || imageList.get(1) == "" || imageList.get(1).contentEquals("") ){
+                    imageView.setImageResource(R.drawable.error);
+                }
+                else {
+                    Picasso.with(getActivity()).load(imageList.get(1)).into(imageView);
+                }
             }
             else{
-                Picasso.with(getActivity()).load(arrivalsArrayList.get(j).getImage()).into(imageView);
+                if(arrivalsArrayList.get(j).getImage()== null || arrivalsArrayList.get(j).getImage() == "" ||
+                        arrivalsArrayList.get(j).getImage().contentEquals("") ){
+                    imageView.setImageResource(R.drawable.error);
+
+                }
+                else {
+                    Picasso.with(getActivity()).load(arrivalsArrayList.get(j).getImage()).into(imageView);
+                }
             }
 
             TextView textView = new TextView(getActivity());
@@ -594,10 +607,22 @@ myRoot.addView(a);
             a.addView(imageView);
             if(trendingArrayList.get(j).getImage().contains(",")) {
                 List<String> imageList = Arrays.asList(trendingArrayList.get(j).getImage().split(","));
-                Picasso.with(getActivity()).load(imageList.get(1)).into(imageView);
+                if(imageList.get(1)== null || imageList.get(1) == "" || imageList.get(1).contentEquals("") ){
+                    imageView.setImageResource(R.drawable.error);
+
+                }
+                else {
+                    Picasso.with(getActivity()).load(imageList.get(1)).into(imageView);
+                }
             }
             else{
-                Picasso.with(getActivity()).load(trendingArrayList.get(j).getImage()).into(imageView);
+                if(trendingArrayList.get(j).getImage()== null || trendingArrayList.get(j).getImage() == "" || trendingArrayList.get(j).getImage().contentEquals("") ){
+                    imageView.setImageResource(R.drawable.error);
+
+                }
+                else {
+                    Picasso.with(getActivity()).load(trendingArrayList.get(j).getImage()).into(imageView);
+                }
             }
 
             TextView textView = new TextView(getActivity());
@@ -648,10 +673,24 @@ myRoot.addView(a);
             a.addView(imageView);
             if(offersArrayList.get(j).getImage().contains(",")) {
                 List<String> imageList = Arrays.asList(offersArrayList.get(j).getImage().split(","));
-                Picasso.with(getActivity()).load(imageList.get(1)).into(imageView);
+                if(imageList.get(1)== null || imageList.get(1) == "" || imageList.get(1).contentEquals("") ){
+                    imageView.setImageResource(R.drawable.error);
+
+                }
+                else{
+                Picasso.with(getActivity())
+                        .load(imageList.get(1)).into(imageView);
+                }
             }
             else{
-                Picasso.with(getActivity()).load(offersArrayList.get(j).getImage()).into(imageView);
+                if(offersArrayList.get(j).getImage()== null || offersArrayList.get(j).getImage() == "" ||
+                        offersArrayList.get(j).getImage().contentEquals("") ){
+                    imageView.setImageResource(R.drawable.error);
+
+                }
+                else {
+                    Picasso.with(getActivity()).load(offersArrayList.get(j).getImage()).into(imageView);
+                }
             }
 
             TextView textView = new TextView(getActivity());

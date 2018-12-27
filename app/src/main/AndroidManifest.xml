@@ -75,7 +75,13 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorPrimaryDark" />
 
-        <activity android:name=".Activity.ItemList"
+        <activity
+            android:name=".Activity.ItemList"
+            android:theme="@style/NoAction" />
+        <activity
+            android:name=".Activity.ItemDetails"
+            android:theme="@style/NoAction" />
+        <activity android:name=".Activity.CartActivity"
             android:theme="@style/NoAction"></activity>
     </application>
 
