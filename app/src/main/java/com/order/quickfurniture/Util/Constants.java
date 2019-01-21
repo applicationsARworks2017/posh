@@ -28,6 +28,7 @@ public class Constants {
     public static  String SHAREDPREFERENCE_KEY_FCM ="furniturefcm" ;
     public static  String FCM_ID ="fcm_id" ;
     public static  String HOME_ITEM ="Items/otherList.json" ;
+    public static  String ITEM_DETAILS ="items/view.json" ;
 
     public static void  NointernetDialog(Activity activity){
         final Dialog dialog = new Dialog(activity);

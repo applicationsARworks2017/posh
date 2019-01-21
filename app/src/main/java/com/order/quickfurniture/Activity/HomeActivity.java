@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.order.quickfurniture.Fragment.CategoryFragment;
 import com.order.quickfurniture.Fragment.HomeFragment;
+import com.order.quickfurniture.Fragment.ProfileFragment;
 import com.order.quickfurniture.R;
 
 public class HomeActivity extends AppCompatActivity {
@@ -84,10 +85,10 @@ public class HomeActivity extends AppCompatActivity {
                 break;
 
 
-            /*case R.id.profile:
-                frag=new Profile();
+            case R.id.profile:
+                frag=new ProfileFragment();
                 item.setCheckable(true);
-                break;*/
+                break;
 
             default:
                 frag=new HomeFragment();

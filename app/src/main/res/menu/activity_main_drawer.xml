@@ -9,11 +9,11 @@
         android:icon="@mipmap/baseline_view_module_black_24"
         android:title="Category" />
     <item
-        android:id="@+id/profile"
+        android:id="@+id/track"
         android:icon="@mipmap/baseline_airport_shuttle_black_24"
         android:title="Orders" />
     <item
-        android:id="@+id/profile1"
+        android:id="@+id/profile"
         android:icon="@mipmap/baseline_person_black_24"
         android:title="Profile" />
 </menu>

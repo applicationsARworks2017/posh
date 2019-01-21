@@ -1,6 +1,7 @@
 package com.order.quickfurniture.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -18,7 +19,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.order.quickfurniture.Activity.ItemDetails;
 import com.order.quickfurniture.Adapter.CategoryAdapter;
 import com.order.quickfurniture.Adapter.SlidingImage_Adapter;
 import com.order.quickfurniture.Pojo.Category;
@@ -517,6 +520,7 @@ myRoot.addView(a);
     private void CreateArrivalsection(int arrivals_count) {
         for(int j = 0;j<arrivals_count;j++) {
             LinearLayout a = new LinearLayout(getActivity());
+            a.setId(j);
             a.setOrientation(LinearLayout.VERTICAL);
             a.setGravity(Gravity.CENTER_HORIZONTAL);
             RelativeLayout.LayoutParams relativeParams = null;
@@ -575,8 +579,19 @@ myRoot.addView(a);
             textView_cost.setText("\u20B9 "+arrivalsArrayList.get(j).getPrice());
             //textView_cost.setLayoutParams(tvtime_params);
             a.addView(textView_cost);
-
-
+            final int finalJ = j;
+            a.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String id = arrivalsArrayList.get(finalJ).getId();
+                    String name = arrivalsArrayList.get(finalJ).getName();
+                    //Toast.makeText(getContext(),id,Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getActivity(), ItemDetails.class);
+                    intent.putExtra("_ID",id);
+                    intent.putExtra("_NAME",name);
+                    startActivity(intent);
+                }
+            });
             lin_arrivals_horizontal.addView(a);
         }
     }
@@ -641,7 +656,19 @@ myRoot.addView(a);
             textView_cost.setText("\u20B9 "+offersArrayList.get(j).getPrice());
             //textView_cost.setLayoutParams(tvtime_params);
             a.addView(textView_cost);
-
+            final int finalJ = j;
+            a.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String id = trendingArrayList.get(finalJ).getId();
+                    String name = trendingArrayList.get(finalJ).getName();
+                    Intent intent = new Intent(getActivity(), ItemDetails.class);
+                    intent.putExtra("_ID",id);
+                    intent.putExtra("_NAME",name);
+                    startActivity(intent);
+                    //Toast.makeText(getContext(),id,Toast.LENGTH_LONG).show();
+                }
+            });
 
             lin_trendings_horizontal.addView(a);
         }
@@ -710,7 +737,19 @@ myRoot.addView(a);
             //textView_cost.setLayoutParams(tvtime_params);
             a.addView(textView_cost);
 
-
+            final int finalJ = j;
+            a.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String id = offersArrayList.get(finalJ).getId();
+                    String name = offersArrayList.get(finalJ).getName();
+                    Intent intent = new Intent(getActivity(), ItemDetails.class);
+                    intent.putExtra("_ID",id);
+                    intent.putExtra("_NAME",name);
+                    startActivity(intent);
+                   // Toast.makeText(getContext(),id,Toast.LENGTH_LONG).show();
+                }
+            });
             lin_offer_horizontal.addView(a);
         }
     }
