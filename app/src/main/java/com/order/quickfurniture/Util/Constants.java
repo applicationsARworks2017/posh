@@ -11,8 +11,7 @@ import com.order.quickfurniture.R;
 
 public class Constants {
 
-
-    public static  String MAINURL = "http://applicationworld.net/furniture/" ;
+    public static  String MAINURL = "http://theposh.online/" ;
     public static  String LOGIN ="users/loginCheck.json" ;
     public static  String SIGNUP ="users/add.json" ;
     public static  String BANNERLIST ="banners/index.json" ;

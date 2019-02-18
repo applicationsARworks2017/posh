@@ -248,6 +248,11 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString(Constants.USER_PHOTO, photo);
                 editor.putString(Constants.USER_EMAIL, email_id);
                 editor.commit();
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
             }
             else {
                 // Toast.makeText(Login_Activity.this, server_message, Toast.LENGTH_LONG).show();

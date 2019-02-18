@@ -2,13 +2,18 @@ package com.order.quickfurniture.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -40,6 +45,7 @@ public class ItemDetails extends AppCompatActivity {
     int server_status;
     ImageView item_image,img1,img2,img3,img4;
     String category_id, sub_category_id, item_type_id, name, price, discount, actual_price, image, description;
+    TextView tv_desc,tv_productnm,tv_price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +64,9 @@ public class ItemDetails extends AppCompatActivity {
         img2 = (ImageView)findViewById(R.id.img2);
         img3 = (ImageView)findViewById(R.id.img3);
         img4 = (ImageView)findViewById(R.id.img4);
+        tv_desc =(TextView)findViewById(R.id.tv_desc);
+        tv_productnm =(TextView)findViewById(R.id.tv_productnm);
+        tv_price =(TextView)findViewById(R.id.tv_price);
 
         detail_tool = (Toolbar) findViewById(R.id.detail_tool);
         detail_tool.setTitleTextColor(Color.WHITE);
@@ -74,6 +83,7 @@ public class ItemDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ItemDetails.this, CartActivity.class);
+                intent.putExtra("name",name);
                 startActivity(intent);
             }
         });
@@ -168,11 +178,26 @@ public class ItemDetails extends AppCompatActivity {
             List<String> imageList = Arrays.asList(image.split(","));
             
             if(imageList.get(0)== null || imageList.get(0) == "" || imageList.get(0).contentEquals("") ){
+                item_image.setImageResource(R.drawable.error);
+
+            }
+            else {
+                Picasso.with(getApplicationContext()).load(imageList.get(0)).into(item_image);
+            } if(imageList.get(0)== null || imageList.get(0) == "" || imageList.get(0).contentEquals("") ){
                 img1.setImageResource(R.drawable.error);
 
             }
             else {
                 Picasso.with(getApplicationContext()).load(imageList.get(0)).into(img1);
+                final String img= imageList.get(0);
+
+                img1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Picasso.with(getApplicationContext()).load(img).into(item_image);
+
+                    }
+                });
             }
             if(imageList.get(1)== null || imageList.get(1) == "" || imageList.get(1).contentEquals("") ){
                 img2.setImageResource(R.drawable.error);
@@ -180,6 +205,14 @@ public class ItemDetails extends AppCompatActivity {
             }
             else {
                 Picasso.with(getApplicationContext()).load(imageList.get(1)).into(img2);
+               final String img= imageList.get(1);
+                img2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Picasso.with(getApplicationContext()).load(img).into(item_image);
+
+                    }
+                });
             }
             if(imageList.get(2)== null || imageList.get(2) == "" || imageList.get(2).contentEquals("") ){
                 img3.setImageResource(R.drawable.error);
@@ -187,6 +220,14 @@ public class ItemDetails extends AppCompatActivity {
             }
             else {
                 Picasso.with(getApplicationContext()).load(imageList.get(2)).into(img3);
+                final String img= imageList.get(2);
+                img3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Picasso.with(getApplicationContext()).load(img).into(item_image);
+
+                    }
+                });
             }
             if(imageList.get(3)== null || imageList.get(3) == "" || imageList.get(3).contentEquals("") ){
                 img4.setImageResource(R.drawable.error);
@@ -194,7 +235,25 @@ public class ItemDetails extends AppCompatActivity {
             }
             else {
                 Picasso.with(getApplicationContext()).load(imageList.get(3)).into(img4);
+                final String img= imageList.get(3);
+                img4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Picasso.with(getApplicationContext()).load(img).into(item_image);
+
+                    }
+                });
             }
+            /*if(imageList.get(4)== null || imageList.get(4) == "" || imageList.get(4).contentEquals("") ){
+                img4.setImageResource(R.drawable.error);
+
+            }
+            else {
+                Picasso.with(getApplicationContext()).load(imageList.get(4)).into(img4);
+            }*/
+            tv_desc.setText(description);
+            tv_productnm.setText(name);
+            tv_price.setText(price);
         }
     }
 

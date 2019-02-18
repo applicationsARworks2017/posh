@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.order.quickfurniture.Pojo.User;
 import com.order.quickfurniture.R;
@@ -37,6 +38,7 @@ public class CreateAccount extends AppCompatActivity {
     EditText et_fullname,et_email,et_phone,et_password;
     Button bt_signup;
     String fcm_id;
+    TextView tv_create_acc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +49,17 @@ public class CreateAccount extends AppCompatActivity {
         et_phone=(EditText)findViewById(R.id.et_phone);
         et_password=(EditText)findViewById(R.id.et_password);
         bt_signup=(Button)findViewById(R.id.bt_signup);
+        tv_create_acc=(TextView) findViewById(R.id.tv_create_acc);
 
         fcm_id = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SHAREDPREFERENCE_KEY_FCM, null);
 
+        tv_create_acc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CreateAccount.this,LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         bt_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -244,7 +254,7 @@ public class CreateAccount extends AppCompatActivity {
                 editor.putString(Constants.USER_PHOTO, photo);
                 editor.putString(Constants.USER_EMAIL, email_id);
                 editor.commit();
-                Intent intent = new Intent(CreateAccount.this, HomeActivity.class);
+                Intent intent = new Intent(CreateAccount.this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
