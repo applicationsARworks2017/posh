@@ -1,16 +1,25 @@
 package com.order.quickfurniture.Fragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.order.quickfurniture.Activity.CreateAccount;
+import com.order.quickfurniture.Activity.GetAddress;
 import com.order.quickfurniture.Activity.LoginActivity;
 import com.order.quickfurniture.R;
 import com.order.quickfurniture.Util.Constants;
@@ -32,8 +41,12 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    String user_id;
+    String user_id,user_name,user_email,user_phone;
     Button login,signup;
+    RelativeLayout profile_lay;
+    ScrollView profile_scroll;
+    TextView tv_fullname,tv_email,tv_phone,tv_address,tv_chage_password;
+    Dialog dialog;
 
     private OnFragmentInteractionListener mListener;
 
@@ -74,8 +87,18 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         user_id = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_ID, null);
+        user_name = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_NAME, null);
+        user_email = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_EMAIL, null);
+        user_phone = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_MOBILE, null);
         login = (Button)view.findViewById(R.id.login);
         signup = (Button)view.findViewById(R.id.signup);
+        profile_lay=(RelativeLayout)view.findViewById(R.id.profile_lay);
+        profile_scroll=(ScrollView)view.findViewById(R.id.profile_scroll);
+        tv_fullname=(TextView)view.findViewById(R.id.tv_fullname);
+        tv_email=(TextView)view.findViewById(R.id.tv_email);
+        tv_phone=(TextView)view.findViewById(R.id.tv_phone);
+        tv_address=(TextView)view.findViewById(R.id.tv_address);
+        tv_chage_password=(TextView)view.findViewById(R.id.tv_password);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,6 +117,54 @@ public class ProfileFragment extends Fragment {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
+            }
+        });
+
+        if(user_id!=""||user_id!=null){
+            profile_lay.setVisibility(View.INVISIBLE);
+            profile_scroll.setVisibility(View.VISIBLE);
+        }
+        else {
+            profile_lay.setVisibility(View.VISIBLE);
+            profile_scroll.setVisibility(View.INVISIBLE);
+        }
+        String upperString = user_name.substring(0,1).toUpperCase() + user_name.substring(1);
+        tv_fullname.setText(upperString);
+        tv_email.setText(user_email);
+        tv_phone.setText(user_phone);
+        tv_chage_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog=new Dialog(getContext());
+                dialog.setContentView(R.layout.dialog_profile_change_password);
+                final EditText old_et=(EditText)dialog.findViewById(R.id.et_old_passwsord);
+                final EditText new_et=(EditText)dialog.findViewById(R.id.et_new_password);
+                Button save=(Button)dialog.findViewById(R.id.btn_password_save);
+                save.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String old_pas=old_et.getText().toString().trim();
+                        String new_pas=new_et.getText().toString().trim();
+                        if(old_pas==new_pas){
+                            SharedPreferences sharedPreferences = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0); // 0 - for private mode
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(Constants.USER_PASSWORD, new_pas);
+                            editor.commit();
+                            //CheckServer();
+                        }
+                        else{
+                            Toast.makeText(getContext(),"Incorrect password",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+                dialog.show();
+            }
+        });
+        tv_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+             Intent i=new Intent(getContext(), GetAddress.class);
+             getContext().startActivity(i);
             }
         });
 

@@ -1,18 +1,28 @@
 package com.order.quickfurniture.Activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,15 +33,28 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.order.quickfurniture.Adapter.AddressAdapter;
+import com.order.quickfurniture.Pojo.AddRessList;
+import com.order.quickfurniture.Pojo.PincodeList;
 import com.order.quickfurniture.Pojo.User;
 import com.order.quickfurniture.R;
 import com.order.quickfurniture.Util.CheckInternet;
 import com.order.quickfurniture.Util.Constants;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,13 +62,21 @@ import static com.order.quickfurniture.Util.Constants.ITEM_DETAILS;
 
 public class ItemDetails extends AppCompatActivity {
     Toolbar detail_tool;
-    String _id, _name;
+    String _id, _name,_price;
     FloatingActionButton gotocart;
     String server_message;
     int server_status;
     ImageView item_image,img1,img2,img3,img4;
     String category_id, sub_category_id, item_type_id, name, price, discount, actual_price, image, description;
-    TextView tv_desc,tv_productnm,tv_price;
+    TextView tv_desc,tv_productnm,tv_price,tv_shipng_charge,tv_area;
+    Button et_check_pincode;
+    Dialog dialog;
+    ArrayList<PincodeList> pinlist;
+    RelativeLayout rel_pin,rel_add;
+    LinearLayout lin_pin;
+    Button btn_change;
+    String ship_charge,area,pin,user_id;
+    Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +87,10 @@ public class ItemDetails extends AppCompatActivity {
         if (extras != null) {
             _id = extras.getString("_ID");
             _name = extras.getString("_NAME");
+            _price = extras.getString("_PRICE");
             // and get whatever type user account id is
         }
+        user_id =getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_ID, null);
 
         item_image = (ImageView)findViewById(R.id.item_image);
         img1 = (ImageView)findViewById(R.id.img1);
@@ -67,6 +100,13 @@ public class ItemDetails extends AppCompatActivity {
         tv_desc =(TextView)findViewById(R.id.tv_desc);
         tv_productnm =(TextView)findViewById(R.id.tv_productnm);
         tv_price =(TextView)findViewById(R.id.tv_price);
+        tv_shipng_charge =(TextView)findViewById(R.id.tv_shipng_charge);
+        tv_area =(TextView)findViewById(R.id.tv_pinarea);
+        btn_change =(Button)findViewById(R.id.btn_change);
+        et_check_pincode =(Button) findViewById(R.id.et_check_pincode);
+        rel_pin =(RelativeLayout) findViewById(R.id.rel_pin);
+        rel_add =(RelativeLayout) findViewById(R.id.rel_add);
+        lin_pin =(LinearLayout) findViewById(R.id.lin_pin);
 
         detail_tool = (Toolbar) findViewById(R.id.detail_tool);
         detail_tool.setTitleTextColor(Color.WHITE);
@@ -82,13 +122,75 @@ public class ItemDetails extends AppCompatActivity {
         gotocart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(Constants.IS_LOGIN == false){
+                  Intent i=new Intent(ItemDetails.this,LoginActivity.class);
+                  startActivity(i);
+                }
+                else{
+                  checkTocart(user_id,_id,_price);
+
+                }
                 Intent intent = new Intent(ItemDetails.this, CartActivity.class);
                 intent.putExtra("name",name);
                 startActivity(intent);
             }
         });
+         snackbar = Snackbar
+                .make(rel_add, "", Snackbar.LENGTH_LONG);
+        snackbar.show();
+        et_check_pincode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog=new Dialog(ItemDetails.this);
+                dialog.setContentView(R.layout.check_pincode_dialog);
+                final EditText et_pin=(EditText)dialog.findViewById(R.id.et_new_ch_pincode);
+                Button save=(Button)dialog.findViewById(R.id.btn_submit);
+                save.setOnClickListener(new  View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String pin=et_pin.getText().toString().trim();
+                        checkServer(pin);
+
+                    }
+                });
+                dialog.show();
+            }
+        });btn_change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog=new Dialog(ItemDetails.this);
+                dialog.setContentView(R.layout.check_pincode_dialog);
+                final EditText et_pin=(EditText)dialog.findViewById(R.id.et_new_ch_pincode);
+                Button save=(Button)dialog.findViewById(R.id.btn_submit);
+                save.setOnClickListener(new  View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String pin=et_pin.getText().toString().trim();
+                        checkServer(pin);
+
+                    }
+                });
+                dialog.show();
+            }
+        });
         if (CheckInternet.getNetworkConnectivityStatus(ItemDetails.this)) {
             getItemdetails(_id);
+        } else {
+            Constants.NointernetDialog(ItemDetails.this);
+        }
+    }
+
+    private void checkTocart(String user_id, String id, String price) {
+        if (CheckInternet.getNetworkConnectivityStatus(ItemDetails.this)) {
+            new addCartdetails().execute(user_id,id,price);
+        } else {
+            Constants.NointernetDialog(ItemDetails.this);
+        }
+    }
+
+    private void checkServer(String pin) {
+        if (CheckInternet.getNetworkConnectivityStatus(ItemDetails.this)) {
+            new getPindetails().execute(pin);
         } else {
             Constants.NointernetDialog(ItemDetails.this);
         }
@@ -258,4 +360,255 @@ public class ItemDetails extends AppCompatActivity {
     }
 
 
+    private class getPindetails extends AsyncTask<String, Void, Void> {
+        private static final String TAG = "getAdressList";
+        int server_status;
+        String server_message;
+        ProgressDialog progressDialog = null;
+
+        @Override
+        protected void onPreExecute() {
+            if(progressDialog == null) {
+                progressDialog = ProgressDialog.show(ItemDetails.this, "Loading ", "Please wait...");
+            }
+        }
+        @Override
+        protected Void doInBackground(String... params) {
+
+
+            try {
+                InputStream in = null;
+                int resCode = -1;
+                String link = Constants.MAINURL + Constants.CHECK_PINCODE;
+                URL url = new URL(link);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(10000);
+                conn.setConnectTimeout(15000);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+                conn.setAllowUserInteraction(false);
+                conn.setInstanceFollowRedirects(true);
+                conn.setRequestMethod("POST");
+
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("pincode", params[0]);
+                String query = builder.build().getEncodedQuery();
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+
+                conn.connect();
+                resCode = conn.getResponseCode();
+                if (resCode == HttpURLConnection.HTTP_OK) {
+                    in = conn.getInputStream();
+                }
+                if (in == null) {
+                    return null;
+                }
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+                String response = "", data = "";
+
+                while ((data = reader.readLine()) != null) {
+                    response += data + "\n";
+                }
+
+                Log.i(TAG, "Response : " + response);
+
+                /*
+                *
+                * {
+    "pincodes": [
+        {
+            "id": 1,
+            "pin": "751024",
+            "charge": 12,
+            "area": "fds fds fdsf sdf",
+            "created": "2019-01-11T18:33:01+00:00",
+            "modified": "2019-01-11T18:33:01+00:00"
+        }
+    ]
+}*/
+
+                if (response != null && response.length() > 0) {
+                    JSONObject res = new JSONObject(response.trim());
+                    // server_status=res.getInt("status");
+                    JSONArray ListArray = res.getJSONArray("pincodes");
+                    if(ListArray.length()<=0){
+                        server_message="No Items Found";
+
+                    }
+                    else{
+                        server_status=1;
+                        server_message="Pincode Checked";
+                        for (int i = 0; i < ListArray.length(); i++) {
+                            JSONObject o_list_obj = ListArray.getJSONObject(i);
+                            String id = o_list_obj.getString("id");
+                             ship_charge = o_list_obj.getString("charge");
+                             area = o_list_obj.getString("area");
+                             pin = o_list_obj.getString("pin");
+                            PincodeList list1 = new PincodeList(id,ship_charge,area,pin);
+                            pinlist.add(list1);
+
+
+                        }
+                    }
+                }
+                return null;
+            } catch (Exception exception) {
+                Log.e(TAG, "LoginAsync : doInBackground", exception);
+                server_message="Network Error";
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void data) {
+            super.onPostExecute(data);
+            progressDialog.dismiss();
+            if(server_status==1) {
+                Toast.makeText(ItemDetails.this,server_message,Toast.LENGTH_SHORT).show();
+                lin_pin.setVisibility(View.GONE);
+                rel_pin.setVisibility(View.VISIBLE);
+                tv_shipng_charge.setText("Delivery charges "+" : "+ship_charge);
+                tv_area.setText("Deliver to"+" "+area+" - "+pin);
+                dialog.dismiss();
+            }
+            else{
+                Constants.SomethingWrong(ItemDetails.this,server_message);
+            }
+        }
+    }
+
+
+    private class addCartdetails extends AsyncTask<String,Void,Void>{
+        private static final String TAG = "adding cart";
+        int server_status;
+        String server_message;
+        ProgressDialog progressDialog = null;
+
+        @Override
+        protected void onPreExecute() {
+            if(progressDialog == null) {
+                progressDialog = ProgressDialog.show(ItemDetails.this, "Loading ", "Please wait...");
+            }
+        }
+        @Override
+        protected Void doInBackground(String... params) {
+
+
+            try {
+                InputStream in = null;
+                int resCode = -1;
+                String link = Constants.MAINURL + Constants.ADD_CART;
+                URL url = new URL(link);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(10000);
+                conn.setConnectTimeout(15000);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+                conn.setAllowUserInteraction(false);
+                conn.setInstanceFollowRedirects(true);
+                conn.setRequestMethod("POST");
+
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("user_id", params[0])
+                        .appendQueryParameter("item_id", params[1])
+                        .appendQueryParameter("price", params[2])
+                        .appendQueryParameter("quentity","1");
+
+                String query = builder.build().getEncodedQuery();
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+
+                conn.connect();
+                resCode = conn.getResponseCode();
+                if (resCode == HttpURLConnection.HTTP_OK) {
+                    in = conn.getInputStream();
+                }
+                if (in == null) {
+                    return null;
+                }
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+                String response = "", data = "";
+
+                while ((data = reader.readLine()) != null) {
+                    response += data + "\n";
+                }
+
+                Log.i(TAG, "Response : " + response);
+
+                /*
+                *
+                * {
+    "pincodes": [
+        {
+            "id": 1,
+            "pin": "751024",
+            "charge": 12,
+            "area": "fds fds fdsf sdf",
+            "created": "2019-01-11T18:33:01+00:00",
+            "modified": "2019-01-11T18:33:01+00:00"
+        }
+    ]
+}*/
+
+                if (response != null && response.length() > 0) {
+                    JSONObject res = new JSONObject(response.trim());
+                    // server_status=res.getInt("status");
+                    JSONArray ListArray = res.getJSONArray("pincodes");
+                    if(ListArray.length()<=0){
+                        server_message="No Items Found";
+
+                    }
+                    else{
+                        server_status=1;
+                        server_message="Pincode Checked";
+                        for (int i = 0; i < ListArray.length(); i++) {
+                            JSONObject o_list_obj = ListArray.getJSONObject(i);
+                            String id = o_list_obj.getString("id");
+                            ship_charge = o_list_obj.getString("charge");
+                            area = o_list_obj.getString("area");
+                            pin = o_list_obj.getString("pin");
+                            PincodeList list1 = new PincodeList(id,ship_charge,area,pin);
+                            pinlist.add(list1);
+
+
+                        }
+                    }
+                }
+                return null;
+            } catch (Exception exception) {
+                Log.e(TAG, "LoginAsync : doInBackground", exception);
+                server_message="Network Error";
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void data) {
+            super.onPostExecute(data);
+            progressDialog.dismiss();
+            if(server_status==1) {
+
+            }
+            else{
+                Constants.SomethingWrong(ItemDetails.this,server_message);
+            }
+        }
+    }
 }

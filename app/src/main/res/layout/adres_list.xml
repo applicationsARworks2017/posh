@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryBG">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_margin="15dp"
+        android:id="@+id/rel_adress"
+        android:visibility="visible"
+        android:background="@drawable/customborder1">
+
+        <ImageView
+            android:id="@+id/tv_ed_de"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@mipmap/baseline_more_vert_black_48"
+            android:padding="5dp" />
+    <TextView
+        android:id="@+id/tv_nm_mobile"
+        android:layout_below="@+id/tv_ed_de"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="name,mobile"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textStyle="bold"/>
+        <TextView
+        android:id="@+id/tv_adres"
+        android:layout_below="@+id/tv_nm_mobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="name,mobile"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"/>
+        <RelativeLayout
+            android:id="@+id/rel_select"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:visibility="gone"
+            android:background="@drawable/customeditr">
+            <TextView
+                android:id="@+id/tv_edit"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dp"
+                android:text="EDIT"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/hr"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@color/bluebg"
+                android:layout_below="@id/tv_edit"></LinearLayout>
+            <TextView
+                android:id="@+id/tv_delete"
+                android:layout_below="@+id/hr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DELETE"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -55,7 +55,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:paddingLeft="5dp"
-                        android:inputType="textPersonName"
+                        android:inputType="textCapWords"
                         android:backgroundTint="@color/colorPrimary"
                         android:id="@+id/et_fullname"
                         android:paddingRight="5dp"/>

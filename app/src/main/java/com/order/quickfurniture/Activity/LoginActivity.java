@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     Button bt_login;
     EditText et_username,et_password;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -248,6 +249,7 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString(Constants.USER_PHOTO, photo);
                 editor.putString(Constants.USER_EMAIL, email_id);
                 editor.commit();
+                Constants.IS_LOGIN = true;
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

@@ -585,10 +585,12 @@ myRoot.addView(a);
                 public void onClick(View view) {
                     String id = arrivalsArrayList.get(finalJ).getId();
                     String name = arrivalsArrayList.get(finalJ).getName();
+                    String price = arrivalsArrayList.get(finalJ).getPrice();
                     //Toast.makeText(getContext(),id,Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getActivity(), ItemDetails.class);
                     intent.putExtra("_ID",id);
                     intent.putExtra("_NAME",name);
+                    intent.putExtra("_PRICE",price);
                     startActivity(intent);
                 }
             });

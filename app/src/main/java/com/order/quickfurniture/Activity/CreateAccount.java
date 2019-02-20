@@ -214,7 +214,12 @@ public class CreateAccount extends AppCompatActivity {
                         ulist.setEmail(email_id);
                         ulist.setPhoto(photo);
                         ulist.setUser_type(user_type);
-                    } else {
+                    }
+                    else if(server_status==2){
+                        server_message="The user already exits";
+
+                    }
+                        else {
                         server_message = "Error While Creating Account";
                     }
                 }

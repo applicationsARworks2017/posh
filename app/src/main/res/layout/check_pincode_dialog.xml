@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryBG">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_close_black_24dp"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:id="@+id/im_close"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Use pincode to check delivery info"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/colour_black"/>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingLeft="5dp"
+            android:maxLength="6"
+            android:inputType="number"
+            android:hint="Enter pincode"
+            android:backgroundTint="@color/colorPrimary"
+            android:id="@+id/et_new_ch_pincode"
+            android:paddingRight="5dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="match_parent"
+                android:background="@drawable/customlogin"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorWhite"
+                android:text="Submit"
+                android:id="@+id/btn_submit"
+                android:layout_marginBottom="20dp"
+                android:layout_height="40dp" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
