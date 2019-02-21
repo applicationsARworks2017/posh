@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -46,13 +47,14 @@ import java.util.ArrayList;
 public class GetAddress extends AppCompatActivity {
     RelativeLayout profile_add_adress,add_rel;
     ListView lv_address;
-    EditText et_name,et_email,et_phone,et_state,et_land,et_adres,et_pin,et_secn;
+    public   static EditText et_name,et_email,et_phone,et_state,et_land,et_adres,et_pin,et_secn;
     TextView tv_save,tv_cancel;
     ArrayList<AddRessList> addresList;
     String user_id;
     AddressAdapter adapter;
     Toolbar detail_tool;
     ScrollView scrol_profile_add_adress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +108,13 @@ public class GetAddress extends AppCompatActivity {
              checkvalidation();
             }
         });
+        et_pin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(GetAddress.this,Getpincode.class);
+                startActivity(i);
+            }
+        });
 
         getAddressList();
 
@@ -141,7 +150,7 @@ public class GetAddress extends AppCompatActivity {
     private void AddAdress(String fullname, String email, String phone, String adres, String landmark,
                            String state, String pin) {
         if(CheckInternet.getNetworkConnectivityStatus(GetAddress.this)){
-            new Addares_asyn().execute(fullname,email,phone,adres,landmark,state,pin);
+            new Addares_asyn().execute(fullname,email,phone,adres,landmark,state,Getpincode.pin_id);
         }
         else {
             Constants.NointernetDialog(GetAddress.this);

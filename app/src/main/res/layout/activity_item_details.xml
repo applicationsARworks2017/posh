@@ -207,4 +207,77 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        android:id="@+id/relative_addcart"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_close_black_24dp"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:id="@+id/im_close"/>
+        <TextView
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/im_close"
+            android:background="@drawable/customborder"/>
+
+    <TextView
+        android:id="@+id/tv_aded_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="atdded to car"
+        android:layout_below="@+id/line"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_margin="20dp"
+        android:textColor="@color/colour_black"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="150dp"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:background="@drawable/customshoping"
+            android:textColor="@color/colour_black"
+            android:text="CONTINUE SHOPING"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_gravity="center"
+            android:id="@+id/btn_cont_shpng"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_width="wrap_content"
+            android:background="@drawable/gotocart"
+            android:textColor="@color/colorWhite"
+            android:text="GO TO CART"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:id="@+id/btn_goto_cart"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>
+
 </RelativeLayout>

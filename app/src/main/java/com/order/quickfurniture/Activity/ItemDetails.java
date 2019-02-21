@@ -33,8 +33,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.order.quickfurniture.Adapter.AddressAdapter;
-import com.order.quickfurniture.Pojo.AddRessList;
 import com.order.quickfurniture.Pojo.PincodeList;
 import com.order.quickfurniture.Pojo.User;
 import com.order.quickfurniture.R;
@@ -66,17 +64,16 @@ public class ItemDetails extends AppCompatActivity {
     FloatingActionButton gotocart;
     String server_message;
     int server_status;
-    ImageView item_image,img1,img2,img3,img4;
+    ImageView item_image,img1,img2,img3,img4,im_close;
     String category_id, sub_category_id, item_type_id, name, price, discount, actual_price, image, description;
-    TextView tv_desc,tv_productnm,tv_price,tv_shipng_charge,tv_area;
+    TextView tv_desc,tv_productnm,tv_price,tv_shipng_charge,tv_area,tv_aded_item_name;
     Button et_check_pincode;
-    Dialog dialog;
+    Dialog dialog,dialog1;
     ArrayList<PincodeList> pinlist;
-    RelativeLayout rel_pin,rel_add;
+    RelativeLayout rel_pin,rel_add,relative_addcart;
     LinearLayout lin_pin;
-    Button btn_change;
+    Button btn_change,goto_cart,btn_ctn;
     String ship_charge,area,pin,user_id;
-    Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,15 +94,18 @@ public class ItemDetails extends AppCompatActivity {
         img2 = (ImageView)findViewById(R.id.img2);
         img3 = (ImageView)findViewById(R.id.img3);
         img4 = (ImageView)findViewById(R.id.img4);
+        im_close = (ImageView)findViewById(R.id.im_close);
         tv_desc =(TextView)findViewById(R.id.tv_desc);
         tv_productnm =(TextView)findViewById(R.id.tv_productnm);
         tv_price =(TextView)findViewById(R.id.tv_price);
         tv_shipng_charge =(TextView)findViewById(R.id.tv_shipng_charge);
         tv_area =(TextView)findViewById(R.id.tv_pinarea);
+        tv_aded_item_name =(TextView)findViewById(R.id.tv_aded_item_name);
         btn_change =(Button)findViewById(R.id.btn_change);
         et_check_pincode =(Button) findViewById(R.id.et_check_pincode);
         rel_pin =(RelativeLayout) findViewById(R.id.rel_pin);
         rel_add =(RelativeLayout) findViewById(R.id.rel_add);
+        relative_addcart =(RelativeLayout) findViewById(R.id.relative_addcart);
         lin_pin =(LinearLayout) findViewById(R.id.lin_pin);
 
         detail_tool = (Toolbar) findViewById(R.id.detail_tool);
@@ -119,10 +119,33 @@ public class ItemDetails extends AppCompatActivity {
         });
         detail_tool.setTitle(_name);
         gotocart = (FloatingActionButton) findViewById(R.id.gotocart);
-        gotocart.setOnClickListener(new View.OnClickListener() {
+        btn_ctn=(Button)findViewById(R.id.btn_cont_shpng);
+        goto_cart=(Button)findViewById(R.id.btn_goto_cart);
+        btn_ctn.setOnClickListener(new  View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Constants.IS_LOGIN == false){
+                //checkServer(pin);
+                Intent i=new Intent(ItemDetails.this,HomeActivity.class);
+                startActivity(i);
+
+
+            }
+        });
+        gotocart.setOnClickListener(new  View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //checkServer(pin);
+                Toast.makeText(ItemDetails.this,"go to cart",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ItemDetails.this, CartActivity.class);
+                intent.putExtra("name",name);
+                startActivity(intent);
+
+            }
+        });
+        goto_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(user_id==""||user_id==null){
                   Intent i=new Intent(ItemDetails.this,LoginActivity.class);
                   startActivity(i);
                 }
@@ -130,14 +153,17 @@ public class ItemDetails extends AppCompatActivity {
                   checkTocart(user_id,_id,_price);
 
                 }
-                Intent intent = new Intent(ItemDetails.this, CartActivity.class);
-                intent.putExtra("name",name);
-                startActivity(intent);
+
             }
         });
-         snackbar = Snackbar
-                .make(rel_add, "", Snackbar.LENGTH_LONG);
-        snackbar.show();
+        im_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                relative_addcart.setVisibility(View.GONE);
+            }
+        });
+
+
         et_check_pincode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -551,43 +577,16 @@ public class ItemDetails extends AppCompatActivity {
 
                 Log.i(TAG, "Response : " + response);
 
-                /*
-                *
-                * {
-    "pincodes": [
-        {
-            "id": 1,
-            "pin": "751024",
-            "charge": 12,
-            "area": "fds fds fdsf sdf",
-            "created": "2019-01-11T18:33:01+00:00",
-            "modified": "2019-01-11T18:33:01+00:00"
-        }
-    ]
-}*/
-
                 if (response != null && response.length() > 0) {
                     JSONObject res = new JSONObject(response.trim());
-                    // server_status=res.getInt("status");
-                    JSONArray ListArray = res.getJSONArray("pincodes");
-                    if(ListArray.length()<=0){
-                        server_message="No Items Found";
-
+                    JSONObject _object = res.getJSONObject("res");
+                    server_status = _object.optInt("status");
+                    if (server_status == 1) {
+                        server_message="Item  added to cart";
                     }
-                    else{
-                        server_status=1;
-                        server_message="Pincode Checked";
-                        for (int i = 0; i < ListArray.length(); i++) {
-                            JSONObject o_list_obj = ListArray.getJSONObject(i);
-                            String id = o_list_obj.getString("id");
-                            ship_charge = o_list_obj.getString("charge");
-                            area = o_list_obj.getString("area");
-                            pin = o_list_obj.getString("pin");
-                            PincodeList list1 = new PincodeList(id,ship_charge,area,pin);
-                            pinlist.add(list1);
 
-
-                        }
+                    else {
+                        server_message = "Error While item added";
                     }
                 }
                 return null;
@@ -604,11 +603,24 @@ public class ItemDetails extends AppCompatActivity {
             super.onPostExecute(data);
             progressDialog.dismiss();
             if(server_status==1) {
+                String item_name=name.toUpperCase();
+                tv_aded_item_name.setText(" '' "+item_name+" '' "+" added to cart ");
+                relative_addcart.setVisibility(View.VISIBLE);
+                gotocart.setVisibility(View.GONE);
+                showSnackBar("Item  added to cart");
 
             }
             else{
                 Constants.SomethingWrong(ItemDetails.this,server_message);
             }
         }
+    }
+    void showSnackBar(String message){
+        Snackbar snackbar = Snackbar
+                .make(rel_add, "", Snackbar.LENGTH_LONG);
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(Color.parseColor("#ae0a11"));
+
+        snackbar.show();
     }
 }

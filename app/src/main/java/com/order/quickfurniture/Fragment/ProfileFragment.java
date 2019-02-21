@@ -128,8 +128,8 @@ public class ProfileFragment extends Fragment {
             profile_lay.setVisibility(View.VISIBLE);
             profile_scroll.setVisibility(View.INVISIBLE);
         }
-        String upperString = user_name.substring(0,1).toUpperCase() + user_name.substring(1);
-        tv_fullname.setText(upperString);
+//        String upperString = user_name.substring(0,1).toUpperCase() + user_name.substring(1);
+        tv_fullname.setText(user_name);
         tv_email.setText(user_email);
         tv_phone.setText(user_phone);
         tv_chage_password.setOnClickListener(new View.OnClickListener() {

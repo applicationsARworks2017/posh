@@ -127,6 +127,8 @@
             android:layout_marginTop="10dp"
             android:singleLine="true"
             android:hint="Pincode"
+            android:editable="false"
+            android:focusable="false"
             android:inputType="number"
             android:maxLength="6"
             android:layout_marginLeft="20dp"

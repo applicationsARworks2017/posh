@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryBG"
-    tools:context=".Activity.CartActivity">
+    tools:context=".Activity.CartActivity"
+    android:id="@+id/rel">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"

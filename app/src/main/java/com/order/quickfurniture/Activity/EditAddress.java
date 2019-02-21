@@ -34,12 +34,13 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 
 public class EditAddress extends AppCompatActivity {
-    EditText et_name,et_email,et_phone,et_state,et_land,et_adres,et_pin,et_secn;
+   public static EditText et_name,et_email,et_phone,et_state,et_land,et_adres,et_pin,et_secn;
     TextView tv_save,tv_cancel;
     String id,name,email,phone,state,land,adres,pin,city;
     RelativeLayout profile_add_adress;
     String user_id;
     Toolbar detail_tool;
+
 
 
 
@@ -92,7 +93,14 @@ public class EditAddress extends AppCompatActivity {
         et_land.setText(land);
         et_pin.setText(pin);
         et_state.setText(city);
-
+         et_pin.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 Intent i=new Intent(EditAddress.this,Getpincode.class);
+                 i.putExtra("PAGE","EditPage");
+                 startActivity(i);
+             }
+         });
         tv_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,7 +139,7 @@ public class EditAddress extends AppCompatActivity {
         else {
             AddAdress(et_name.getText().toString().trim(),et_email.getText().toString().trim(),
                     et_phone.getText().toString().trim(),et_adres.getText().toString().trim()
-                    ,et_land.getText().toString().trim(),et_state.getText().toString().trim(),et_pin.getText().toString().trim());
+                    ,et_land.getText().toString().trim(),et_state.getText().toString().trim(),Getpincode.pin_id);
 
         }
     }

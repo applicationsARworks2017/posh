@@ -11,12 +11,13 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.EditAddress"
-            android:theme="@style/NoAction"
+        <activity android:name=".Activity.Getpincode"
+            android:theme="@style/NoAction"></activity>
+        <activity
+            android:name=".Activity.EditAddress"
             android:label="Edit Address"
-            android:parentActivityName=".Activity.HomeActivity">
-
-        </activity>
+            android:parentActivityName=".Activity.HomeActivity"
+            android:theme="@style/NoAction"></activity>
         <activity
             android:name=".SplashScreen"
             android:theme="@style/NoAction">
@@ -90,9 +91,9 @@
             android:theme="@style/NoAction" />
         <activity
             android:name=".Activity.GetAddress"
-            android:theme="@style/NoAction"
             android:label=" Address"
-            android:parentActivityName=".Activity.HomeActivity"/>
+            android:parentActivityName=".Activity.HomeActivity"
+            android:theme="@style/NoAction" />
     </application>
 
 </manifest>
