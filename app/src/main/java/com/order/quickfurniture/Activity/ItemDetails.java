@@ -125,8 +125,9 @@ public class ItemDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //checkServer(pin);
-                Intent i=new Intent(ItemDetails.this,HomeActivity.class);
-                startActivity(i);
+               /* Intent i=new Intent(ItemDetails.this,HomeActivity.class);
+                startActivity(i);*/
+               finish();
 
 
             }
@@ -134,26 +135,24 @@ public class ItemDetails extends AppCompatActivity {
         gotocart.setOnClickListener(new  View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //checkServer(pin);
-                Toast.makeText(ItemDetails.this,"go to cart",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(ItemDetails.this, CartActivity.class);
-                intent.putExtra("name",name);
-                startActivity(intent);
+                if(user_id==""||user_id==null){
+                    Intent i=new Intent(ItemDetails.this,LoginActivity.class);
+                    startActivity(i);
+                }
+                else{
+                    checkTocart(user_id,_id,_price);
+
+                }
 
             }
         });
         goto_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(user_id==""||user_id==null){
-                  Intent i=new Intent(ItemDetails.this,LoginActivity.class);
-                  startActivity(i);
-                }
-                else{
-                  checkTocart(user_id,_id,_price);
 
-                }
-
+                Intent intent = new Intent(ItemDetails.this, CartActivity.class);
+                intent.putExtra("name",name);
+                startActivity(intent);
             }
         });
         im_close.setOnClickListener(new View.OnClickListener() {
@@ -311,7 +310,8 @@ public class ItemDetails extends AppCompatActivity {
             }
             else {
                 Picasso.with(getApplicationContext()).load(imageList.get(0)).into(item_image);
-            } if(imageList.get(0)== null || imageList.get(0) == "" || imageList.get(0).contentEquals("") ){
+            }
+            if(imageList.get(0)== null || imageList.get(0) == "" || imageList.get(0).contentEquals("") ){
                 img1.setImageResource(R.drawable.error);
 
             }
@@ -387,7 +387,7 @@ public class ItemDetails extends AppCompatActivity {
 
 
     private class getPindetails extends AsyncTask<String, Void, Void> {
-        private static final String TAG = "getAdressList";
+        private static final String TAG = "getpin";
         int server_status;
         String server_message;
         ProgressDialog progressDialog = null;
@@ -607,7 +607,7 @@ public class ItemDetails extends AppCompatActivity {
                 tv_aded_item_name.setText(" '' "+item_name+" '' "+" added to cart ");
                 relative_addcart.setVisibility(View.VISIBLE);
                 gotocart.setVisibility(View.GONE);
-                showSnackBar("Item  added to cart");
+                showSnackBar("ItemAddedToCart");
 
             }
             else{

@@ -43,7 +43,7 @@ public class CartAdapter extends BaseAdapter {
         return i;
     }
     public class Holder{
-        TextView it_name;
+        TextView it_name,tv_price;
         ImageView split_minus,split_plus;
         EditText et_price;
 
@@ -57,6 +57,7 @@ public class CartAdapter extends BaseAdapter {
                     .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             view = mInflater.inflate(R.layout.activity_cart, viewGroup, false);
            holder. it_name=(TextView)view.findViewById(R.id.it_name);
+           holder. tv_price=(TextView)view.findViewById(R.id.tv_price);
             holder.et_price=(EditText) view.findViewById(R.id.et_price);
             holder.split_minus=(ImageView)view.findViewById(R.id.minus);
             holder.split_plus=(ImageView)view.findViewById(R.id.plus);
@@ -66,12 +67,14 @@ public class CartAdapter extends BaseAdapter {
             holder = (Holder) view.getTag();
         }
         holder.it_name.setTag(i);
+        holder.tv_price.setTag(i);
         holder.et_price.setTag(i);
         holder.split_minus.setTag(i);
         holder.split_plus.setTag(i);
 
 
         holder.it_name.setText(" Pincode : "+_pos.getPrice());
+        holder.tv_price.setText(" RS : "+_pos.getPrice());
         holder.split_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

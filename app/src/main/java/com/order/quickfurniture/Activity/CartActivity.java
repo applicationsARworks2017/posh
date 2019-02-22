@@ -59,6 +59,7 @@ public class CartActivity extends AppCompatActivity {
         cart_tool.setTitleTextColor(Color.WHITE);
         rel=(RelativeLayout)findViewById(R.id.rel);
         swipe_order=(SwipeRefreshLayout)findViewById(R.id.order_swipe);
+        lv_cart=(ListView)findViewById(R.id.lv_cart);
 
         getCartList();
         swipe_order.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -114,7 +115,7 @@ public class CartActivity extends AppCompatActivity {
                         cList=(ArrayList<Cartlist>) resultObj;
                         c_Adapter = new CartAdapter(CartActivity.this,cList );
                         lv_cart.setAdapter(c_Adapter);
-                        pd.cancel();
+                        pd.dismiss();
                     }
 
                     @Override

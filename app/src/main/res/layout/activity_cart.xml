@@ -7,20 +7,13 @@
     android:background="@color/primaryBG"
     tools:context=".Activity.CartActivity"
     android:id="@+id/rel">
-
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:id="@+id/cart_tool"></android.support.v7.widget.Toolbar>
     
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@color/colorWhite"
         android:layout_margin="5dp"
-        app:cardCornerRadius="8dp"
-        android:layout_below="@id/cart_tool">
+        app:cardCornerRadius="8dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -95,6 +88,7 @@
                 android:layout_marginRight="10dp"
                 android:backgroundTint="@color/colorPrimary"/>
             <TextView
+                android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"

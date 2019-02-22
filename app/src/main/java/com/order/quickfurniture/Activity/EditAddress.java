@@ -70,7 +70,7 @@ public class EditAddress extends AppCompatActivity {
             phone = extras.getString("phone");
             adres = extras.getString("adres");
             land = extras.getString("land");
-            pin = extras.getString("pin");
+           // pin = extras.getString("pin");
             city = extras.getString("state");
             // and get whatever type user account id is
         }
@@ -91,13 +91,13 @@ public class EditAddress extends AppCompatActivity {
         et_phone.setText(phone);
         et_adres.setText(adres);
         et_land.setText(land);
-        et_pin.setText(pin);
+       // et_pin.setText(pin);
         et_state.setText(city);
          et_pin.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
                  Intent i=new Intent(EditAddress.this,Getpincode.class);
-                 i.putExtra("PAGE","EditPage");
+                 i.putExtra("PAGE","editpage");
                  startActivity(i);
              }
          });

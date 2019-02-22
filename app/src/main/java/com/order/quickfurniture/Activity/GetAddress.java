@@ -112,6 +112,8 @@ public class GetAddress extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(GetAddress.this,Getpincode.class);
+                i.putExtra("PAGE","getaddresspage");
+
                 startActivity(i);
             }
         });

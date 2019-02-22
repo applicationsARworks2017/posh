@@ -78,17 +78,21 @@ public class Getpincode extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 PincodeList pinlist = (PincodeList) lv_pincode.getItemAtPosition(i);
-                 if(pin_page=="EditPage"){
+                 if(pin_page.contentEquals("editpage")){
                      String pincode = pinlist.getPin();
                      pin_id = pinlist.getId();
                      //GetAddress.pin_id=pin_id;
                      EditAddress.et_pin.setText(pincode);
+                     finish();
                  }
-                String pincode = pinlist.getPin();
-                 pin_id = pinlist.getId();
-                 //GetAddress.pin_id=pin_id;
-                GetAddress.et_pin.setText(pincode);
-                finish();
+                 else{
+                     String pincode = pinlist.getPin();
+                     pin_id = pinlist.getId();
+                     //GetAddress.pin_id=pin_id;
+                     GetAddress.et_pin.setText(pincode);
+                     finish();
+                 }
+
             }
         });
         search_pincode.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
