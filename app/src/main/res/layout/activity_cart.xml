@@ -55,7 +55,7 @@
                     android:padding="5dp"
                     />
                 <EditText
-                    android:id="@+id/et_price"
+                    android:id="@+id/et_qnty"
                     android:layout_width="60dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"

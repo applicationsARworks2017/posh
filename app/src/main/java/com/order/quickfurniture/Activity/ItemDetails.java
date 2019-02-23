@@ -159,6 +159,7 @@ public class ItemDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 relative_addcart.setVisibility(View.GONE);
+                gotocart.setVisibility(View.VISIBLE);
             }
         });
 
@@ -301,6 +302,9 @@ public class ItemDetails extends AppCompatActivity {
     }
 
     private void setAllValues() {
+        tv_desc.setText(description);
+        tv_productnm.setText(name);
+        tv_price.setText("Rs.  "+price);
         if(image.contains(",")) {
             List<String> imageList = Arrays.asList(image.split(","));
             
@@ -379,9 +383,7 @@ public class ItemDetails extends AppCompatActivity {
             else {
                 Picasso.with(getApplicationContext()).load(imageList.get(4)).into(img4);
             }*/
-            tv_desc.setText(description);
-            tv_productnm.setText(name);
-            tv_price.setText(price);
+
         }
     }
 
@@ -607,7 +609,7 @@ public class ItemDetails extends AppCompatActivity {
                 tv_aded_item_name.setText(" '' "+item_name+" '' "+" added to cart ");
                 relative_addcart.setVisibility(View.VISIBLE);
                 gotocart.setVisibility(View.GONE);
-                showSnackBar("ItemAddedToCart");
+               // showSnackBar("ItemAddedToCart");
 
             }
             else{

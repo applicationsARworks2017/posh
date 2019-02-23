@@ -21,7 +21,7 @@ public class CartAdapter extends BaseAdapter {
 
     Context _context;
     ArrayList<Cartlist> c_list;
-    Holder holder;
+    Holder holder,vHolder;
 
     public CartAdapter(CartActivity cartActivity, ArrayList<Cartlist> cList) {
         this._context=cartActivity;
@@ -45,7 +45,7 @@ public class CartAdapter extends BaseAdapter {
     public class Holder{
         TextView it_name,tv_price;
         ImageView split_minus,split_plus;
-        EditText et_price;
+        EditText et_qnty;
 
     }
     @Override
@@ -58,7 +58,7 @@ public class CartAdapter extends BaseAdapter {
             view = mInflater.inflate(R.layout.activity_cart, viewGroup, false);
            holder. it_name=(TextView)view.findViewById(R.id.it_name);
            holder. tv_price=(TextView)view.findViewById(R.id.tv_price);
-            holder.et_price=(EditText) view.findViewById(R.id.et_price);
+            holder.et_qnty=(EditText) view.findViewById(R.id.et_qnty);
             holder.split_minus=(ImageView)view.findViewById(R.id.minus);
             holder.split_plus=(ImageView)view.findViewById(R.id.plus);
 
@@ -68,24 +68,25 @@ public class CartAdapter extends BaseAdapter {
         }
         holder.it_name.setTag(i);
         holder.tv_price.setTag(i);
-        holder.et_price.setTag(i);
-        holder.split_minus.setTag(i);
-        holder.split_plus.setTag(i);
+        holder.et_qnty.setTag(i);
+        holder.split_minus.setTag(holder);
+        holder.split_plus.setTag(holder);
 
 
-        holder.it_name.setText(" Pincode : "+_pos.getPrice());
+        holder.it_name.setText(" Name : "+_pos.getPrice());
         holder.tv_price.setText(" RS : "+_pos.getPrice());
         holder.split_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Double  qnty=Double.valueOf(holder.et_price.getText().toString().trim());
+                vHolder = (Holder)view.getTag();
+                Double  qnty=Double.valueOf(holder.et_qnty.getText().toString().trim());
                 if(qnty==1){
                     qnty=qnty+1;
                 }
                 else {
                     qnty=qnty+1;
                 }
-                holder.et_price.setText(String.valueOf(qnty));
+                holder.et_qnty.setText(String.valueOf(qnty));
 
                 // qnty=qnty+1;
                 //split_qty.setText(String.valueOf(qnty));
@@ -94,7 +95,9 @@ public class CartAdapter extends BaseAdapter {
         holder.split_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Double qnty = Double.valueOf(holder.et_price.getText().toString().trim());
+                vHolder = (Holder)view.getTag();
+
+                Double qnty = Double.valueOf(holder.et_qnty.getText().toString().trim());
 
                 if(qnty==2 || qnty==2.0){
                     qnty=qnty-1;
@@ -105,7 +108,7 @@ public class CartAdapter extends BaseAdapter {
                     qnty=qnty-1;
                 }
 
-                holder.et_price.setText(String.valueOf(qnty));
+                holder.et_qnty.setText(String.valueOf(qnty));
 
                 // split_qty.setText(String.valueOf(qnty));
             }

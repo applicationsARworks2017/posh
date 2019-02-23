@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.order.quickfurniture.Fragment.CategoryFragment;
 import com.order.quickfurniture.Fragment.HomeFragment;
@@ -61,6 +62,8 @@ public class HomeActivity extends AppCompatActivity {
         MenuItem item1 = menu.findItem(R.id.actionbar_item);
         MenuItemCompat.setActionView(item1, R.layout.notification_update_count_layout);
         notificationCount1 = (RelativeLayout) MenuItemCompat.getActionView(item1);
+
+
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -71,7 +74,9 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.actionbar_item:
+
+
+            case R.id.badge_layout3:
                 Intent i = new Intent(HomeActivity.this, CartActivity.class);
                 startActivity(i);
                 return true;
