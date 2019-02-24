@@ -10,12 +10,12 @@ public class Cartlist {
     String status;
     String order_no;
 
-    @Override
+    /*@Override
     public String toString() {
         return "ClassPojo [id = " + id + ",user_id = " + user_id + ", item_id = " + item_id  +
                 ", quentity = " + quentity + ", price = " + price+ ",status="+status+"" +
                 ",table_no="+table_no+",order_no="+order_no+"]";
-    }
+    }*/
 
     public String getId() {
         return id;

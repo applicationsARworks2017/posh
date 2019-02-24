@@ -108,7 +108,7 @@ public class CartActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        new APIManager().postJSONArrayAPI(Constants.MAINURL+Constants.CART_LIST,"carts",jsonObject, Cartlist.class,this,
+        new APIManager().postJSONArrayAPIModified(Constants.MAINURL+Constants.CART_LIST,"carts","item",jsonObject, Cartlist.class,this,
                 new APIManager.APIManagerInterface() {
                     @Override
                     public void onSuccess(Object resultObj) {

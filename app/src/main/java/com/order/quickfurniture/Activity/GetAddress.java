@@ -283,7 +283,10 @@ public class GetAddress extends AppCompatActivity {
                         String landmark = o_list_obj.getString("landmark");
                         String city = o_list_obj.getString("city");
                         String email = o_list_obj.getString("email");
-                        AddRessList list1 = new AddRessList(id,full_name,mobile,pincode_id,address,locality,landmark,city,email);
+                        JSONObject mypincode = o_list_obj.getJSONObject("pincode");
+                        String pincode = mypincode.getString("pin");
+                        AddRessList list1 = new AddRessList(id,full_name,mobile,pincode_id,address,
+                                locality,landmark,city,email,pincode);
                         addresList.add(list1);
                     }
                 }

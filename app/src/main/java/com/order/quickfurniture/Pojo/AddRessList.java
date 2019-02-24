@@ -1,21 +1,40 @@
 package com.order.quickfurniture.Pojo;
 
 public class AddRessList {
-   private String id,full_name,mobile,pincode_id,address,locality,landmark,city,email;
+   private String id;
+    private String full_name;
+    private String mobile;
+    private String pincode_id;
+    private String address;
+    private String locality;
+    private String landmark;
+    private String city;
+    private String email;
+
+
+
+    private String pincode;
 
     public AddRessList(String id, String full_name, String mobile, String pincode_id, String address, String locality,
-                       String landmark, String city, String email) {
+                       String landmark, String city, String email,String pincode) {
      this.id=id;
      this.full_name=full_name;
      this.mobile=mobile;
      this.pincode_id=pincode_id;
+     this.pincode=pincode;
      this.address=address;
      this.locality=locality;
      this.landmark=landmark;
      this.city=city;
      this.email=email;
     }
+    public String getPincode() {
+        return pincode;
+    }
 
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
     public String getId() {
         return id;
     }

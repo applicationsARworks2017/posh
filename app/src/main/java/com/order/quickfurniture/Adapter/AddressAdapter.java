@@ -106,7 +106,7 @@ public class AddressAdapter extends BaseAdapter {
 
 
         holder.tv_nm_mobile.setText(_pos.getFull_name() + "    " + _pos.getMobile());
-        holder.tv_adres.setText(_pos.getAddress() + " , " + _pos.getLandmark() + " , " + _pos.getCity() + " , " + _pos.getPincode_id());
+        holder.tv_adres.setText(_pos.getAddress() + " , " + _pos.getLandmark() + " , " + _pos.getCity() + " , " + _pos.getPincode());
 
         holder.tv_ed_de.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +129,7 @@ public class AddressAdapter extends BaseAdapter {
                 i.putExtra("phone",_pos.getMobile());
                 i.putExtra("adres",_pos.getAddress());
                 i.putExtra("land",_pos.getLandmark());
-                i.putExtra("pin",_pos.getPincode_id());
+                i.putExtra("pin",_pos.getPincode());
                 i.putExtra("state",_pos.getCity());
                 context.startActivity(i);
 

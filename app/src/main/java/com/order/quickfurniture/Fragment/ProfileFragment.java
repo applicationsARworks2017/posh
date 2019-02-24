@@ -1,13 +1,16 @@
 package com.order.quickfurniture.Fragment;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +24,24 @@ import android.widget.Toast;
 import com.order.quickfurniture.Activity.CreateAccount;
 import com.order.quickfurniture.Activity.GetAddress;
 import com.order.quickfurniture.Activity.LoginActivity;
+import com.order.quickfurniture.Pojo.User;
 import com.order.quickfurniture.R;
 import com.order.quickfurniture.Util.Constants;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.ConnectException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
+import java.net.URL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,7 +60,7 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    String user_id,user_name,user_email,user_phone;
+    String user_id,user_name,user_email,user_phone,user_password;
     Button login,signup;
     RelativeLayout profile_lay;
     ScrollView profile_scroll;
@@ -89,6 +108,7 @@ public class ProfileFragment extends Fragment {
         user_id = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_ID, null);
         user_name = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_NAME, null);
         user_email = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_EMAIL, null);
+        user_password = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_PASSWORD, null);
         user_phone = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_MOBILE, null);
         login = (Button)view.findViewById(R.id.login);
         signup = (Button)view.findViewById(R.id.signup);
@@ -145,7 +165,15 @@ public class ProfileFragment extends Fragment {
                     public void onClick(View view) {
                         String old_pas=old_et.getText().toString().trim();
                         String new_pas=new_et.getText().toString().trim();
-                        if(old_pas==new_pas){
+                        if(!old_pas.contentEquals(user_password)){
+                            dialog.dismiss();
+                            Toast.makeText(getContext(),"Old Password is incorrect",Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            Signup_asyn signup_asyn = new Signup_asyn();
+                            signup_asyn.execute(user_id,new_pas);
+                        }
+                       /* if(user_password.contentEquals(old_pas)){
                             SharedPreferences sharedPreferences = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0); // 0 - for private mode
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString(Constants.USER_PASSWORD, new_pas);
@@ -154,7 +182,7 @@ public class ProfileFragment extends Fragment {
                         }
                         else{
                             Toast.makeText(getContext(),"Incorrect password",Toast.LENGTH_LONG).show();
-                        }
+                        }*/
                     }
                 });
                 dialog.show();
@@ -209,4 +237,162 @@ public class ProfileFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+
+    /*
+     * SignUp Asyntask for security
+     * */
+
+    private class Signup_asyn extends AsyncTask<String, Void, Void> {
+
+        private static final String TAG = "SynchMobnum";
+        private ProgressDialog progressDialog = null;
+        int server_status;
+        String id, mobile, name;
+        String server_message;
+        String user_type;
+        String photo, email_id;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            if (progressDialog == null) {
+                progressDialog = ProgressDialog.show(getContext(), "Update account", "Please wait...");
+            }
+            // onPreExecuteTask();
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+
+            try {
+                String _id = params[0];
+                String _password = params[1];
+                InputStream in = null;
+                int resCode = -1;
+
+                String link = Constants.MAINURL + Constants.SIGNUP;
+                URL url = new URL(link);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(10000);
+                conn.setConnectTimeout(15000);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+                conn.setAllowUserInteraction(false);
+                conn.setInstanceFollowRedirects(true);
+                conn.setRequestMethod("POST");
+
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("id", _id)
+                        .appendQueryParameter("password", _password);
+
+                //.appendQueryParameter("deviceid", deviceid);
+                String query = builder.build().getEncodedQuery();
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+
+                conn.connect();
+                resCode = conn.getResponseCode();
+                if (resCode == HttpURLConnection.HTTP_OK) {
+                    in = conn.getInputStream();
+                }
+                if (in == null) {
+                    return null;
+                }
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+                String response = "", data = "";
+
+                while ((data = reader.readLine()) != null) {
+                    response += data + "\n";
+                }
+
+                Log.i(TAG, "Response : " + response);
+
+                /**
+                 * "{
+                 ""res"": {
+                 ""message"": ""The user has been saved."",
+                 ""status"": 1
+                 },
+                 ""users"": {
+                 ""id"": 4,
+                 ""name"": ""sdfsdfd"",
+                 ""email"": ""avinhjjsh@yahoo.com"",
+                 ""mobile"": ""7205674052"",
+                 ""photo"": null,
+                 ""created"": ""2018-12-06T02:20:59+00:00"",
+                 ""modified"": ""2018-12-06T02:20:59+00:00"",
+                 ""usertype"": ""dfdf"",
+                 ""fcm_id"": ""df"",
+                 ""ios_fcm_id"": ""dfdf""
+                 }
+                 }"
+                 * */
+                if (response != null && response.length() > 0) {
+                    JSONObject res = new JSONObject(response.trim());
+                    JSONObject _object = res.getJSONObject("res");
+                    server_status = _object.optInt("status");
+                    if (server_status == 1) {
+                        JSONObject user_object = res.getJSONObject("users");
+                        id = user_object.optString("id");
+                        name = user_object.optString("name");
+                        email_id = user_object.optString("email_id");
+                        mobile = user_object.optString("mobile");
+                        photo = user_object.optString("photo");
+                        user_type = user_object.optString("usertype");
+                        User ulist = new User();
+                        ulist.setId(id);
+                        ulist.setName(name);
+                        ulist.setEmail(email_id);
+                        ulist.setPhoto(photo);
+                        ulist.setUser_type(user_type);
+                    }
+                    else if(server_status==2){
+                        server_message="The user already exits";
+
+                    }
+                    else {
+                        server_message = "Error While Creating Account";
+                    }
+                }
+
+                return null;
+
+            } catch (SocketTimeoutException exception) {
+                server_message = "Network Error";
+                Log.e(TAG, "SynchMobnum : doInBackground", exception);
+            } catch (ConnectException exception) {
+                server_message = "Network Error";
+                Log.e(TAG, "SynchMobnum : doInBackground", exception);
+            } catch (MalformedURLException exception) {
+                server_message = "Network Error";
+                Log.e(TAG, "SynchMobnum : doInBackground", exception);
+            } catch (IOException exception) {
+                server_message = "Network Error";
+                Log.e(TAG, "SynchMobnum : doInBackground", exception);
+            } catch (Exception exception) {
+                server_message = "Network Error";
+                Log.e(TAG, "SynchMobnum : doInBackground", exception);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void user) {
+            super.onPostExecute(user);
+            progressDialog.cancel();
+
+        }
+    }
+
+
 }

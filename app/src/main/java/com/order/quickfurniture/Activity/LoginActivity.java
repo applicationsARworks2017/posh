@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
         private static final String TAG = "SynchMobnum";
         private ProgressDialog progressDialog = null;
         int server_status;
-        String id,mobile,name;
+        String id,mobile,name,password;
         String server_message;
         String user_type;
         String photo,email_id;
@@ -201,6 +201,7 @@ public class LoginActivity extends AppCompatActivity {
                         photo = user_object.optString("photo");
                         user_type = user_object.optString("usertype");
                         server_message=res.optString("message");
+                        password=res.optString(password);
                         User ulist=new User();
                         ulist.setId(id);
                         ulist.setName(name);
@@ -248,6 +249,7 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString(Constants.USER_NAME, name);
                 editor.putString(Constants.USER_PHOTO, photo);
                 editor.putString(Constants.USER_EMAIL, email_id);
+                editor.putString(Constants.USER_PASSWORD, password);
                 editor.commit();
                 Constants.IS_LOGIN = true;
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
