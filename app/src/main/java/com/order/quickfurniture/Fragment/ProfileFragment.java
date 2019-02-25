@@ -1,5 +1,6 @@
 package com.order.quickfurniture.Fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -64,7 +65,8 @@ public class ProfileFragment extends Fragment {
     Button login,signup;
     RelativeLayout profile_lay;
     ScrollView profile_scroll;
-    TextView tv_fullname,tv_email,tv_phone,tv_address,tv_chage_password;
+    TextView tv_address,tv_chage_password,tv_edit;
+    EditText tv_fullname,tv_email,tv_phone;
     Dialog dialog;
 
     private OnFragmentInteractionListener mListener;
@@ -114,10 +116,11 @@ public class ProfileFragment extends Fragment {
         signup = (Button)view.findViewById(R.id.signup);
         profile_lay=(RelativeLayout)view.findViewById(R.id.profile_lay);
         profile_scroll=(ScrollView)view.findViewById(R.id.profile_scroll);
-        tv_fullname=(TextView)view.findViewById(R.id.tv_fullname);
-        tv_email=(TextView)view.findViewById(R.id.tv_email);
-        tv_phone=(TextView)view.findViewById(R.id.tv_phone);
+        tv_fullname=(EditText)view.findViewById(R.id.tv_fullname);
+        tv_email=(EditText)view.findViewById(R.id.tv_email);
+        tv_phone=(EditText)view.findViewById(R.id.tv_phone);
         tv_address=(TextView)view.findViewById(R.id.tv_address);
+        tv_edit=(TextView)view.findViewById(R.id.tv_edit);
         tv_chage_password=(TextView)view.findViewById(R.id.tv_password);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +140,30 @@ public class ProfileFragment extends Fragment {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
+            }
+        });
+        tv_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_fullname.setEnabled(true);
+                tv_fullname.setFocusable(true);
+                tv_email.setEnabled(true);
+                tv_email.setFocusable(true);
+                tv_phone.setEnabled(true);
+                tv_phone.setFocusable(true);
+                String name = tv_fullname.getText().toString().trim();
+                String email = tv_email.getText().toString().trim();
+                String phone = tv_phone.getText().toString().trim();
+                if (tv_fullname.getText().toString().trim().length() <= 0) {
+                    tv_fullname.setError("Enter Full Name");
+                } else if (tv_email.getText().toString().trim().length() <= 0) {
+                    tv_email.setError("Enter Email");
+                } else if (tv_phone.getText().toString().trim().length() < 10) {
+                    tv_phone.setError("Enter Valid Phone Number");
+                } else {
+                    Edit_asyn signup_asyn = new Edit_asyn();
+                    signup_asyn.execute(user_id, name, email, phone);
+                }
             }
         });
 
@@ -165,13 +192,16 @@ public class ProfileFragment extends Fragment {
                     public void onClick(View view) {
                         String old_pas=old_et.getText().toString().trim();
                         String new_pas=new_et.getText().toString().trim();
+                        String name=tv_fullname.getText().toString().trim();
+                        String email=tv_email.getText().toString().trim();
+                        String phone=tv_phone.getText().toString().trim();
                         if(!old_pas.contentEquals(user_password)){
                             dialog.dismiss();
                             Toast.makeText(getContext(),"Old Password is incorrect",Toast.LENGTH_LONG).show();
                         }
                         else{
-                            Signup_asyn signup_asyn = new Signup_asyn();
-                            signup_asyn.execute(user_id,new_pas);
+                            Edit_asyn signup_asyn = new Edit_asyn();
+                            signup_asyn.execute(user_id,new_pas,name,email,phone);
                         }
                        /* if(user_password.contentEquals(old_pas)){
                             SharedPreferences sharedPreferences = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0); // 0 - for private mode
@@ -244,7 +274,7 @@ public class ProfileFragment extends Fragment {
      * SignUp Asyntask for security
      * */
 
-    private class Signup_asyn extends AsyncTask<String, Void, Void> {
+    private class Edit_asyn extends AsyncTask<String, Void, Void> {
 
         private static final String TAG = "SynchMobnum";
         private ProgressDialog progressDialog = null;
@@ -252,7 +282,7 @@ public class ProfileFragment extends Fragment {
         String id, mobile, name;
         String server_message;
         String user_type;
-        String photo, email_id;
+        String photo, email_id,password;
 
         @Override
         protected void onPreExecute() {
@@ -269,10 +299,13 @@ public class ProfileFragment extends Fragment {
             try {
                 String _id = params[0];
                 String _password = params[1];
+                String _name = params[2];
+                String _email = params[3];
+                String _phone= params[4];
                 InputStream in = null;
                 int resCode = -1;
 
-                String link = Constants.MAINURL + Constants.SIGNUP;
+                String link = Constants.MAINURL + Constants.EDIT_PROFILE;
                 URL url = new URL(link);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(10000);
@@ -285,8 +318,13 @@ public class ProfileFragment extends Fragment {
                 conn.setRequestMethod("POST");
 
                 Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("password", _password)
                         .appendQueryParameter("id", _id)
-                        .appendQueryParameter("password", _password);
+                        .appendQueryParameter("name", _name)
+                        .appendQueryParameter("email", _email)
+                        .appendQueryParameter("mobile", _phone)
+                        .appendQueryParameter("fcm_id", "")
+                        .appendQueryParameter("usertype", "user");
 
                 //.appendQueryParameter("deviceid", deviceid);
                 String query = builder.build().getEncodedQuery();
@@ -318,49 +356,49 @@ public class ProfileFragment extends Fragment {
 
                 /**
                  * "{
-                 ""res"": {
-                 ""message"": ""The user has been saved."",
-                 ""status"": 1
-                 },
-                 ""users"": {
-                 ""id"": 4,
-                 ""name"": ""sdfsdfd"",
-                 ""email"": ""avinhjjsh@yahoo.com"",
-                 ""mobile"": ""7205674052"",
-                 ""photo"": null,
-                 ""created"": ""2018-12-06T02:20:59+00:00"",
-                 ""modified"": ""2018-12-06T02:20:59+00:00"",
-                 ""usertype"": ""dfdf"",
-                 ""fcm_id"": ""df"",
-                 ""ios_fcm_id"": ""dfdf""
-                 }
-                 }"
+                 *     "res": {
+                 *         "message": "The user has been saved.",
+                 *         "status": 1
+                 *     },
+                 *     "userUpdated": {
+                 *         "id": 4,
+                 *         "name": "sdfsdfd",
+                 *         "password": "1234",
+                 *         "email": "avinhjjsh@yahoo.com",
+                 *         "mobile": "7205674052",
+                 *         "photo": null,
+                 *         "created": "2018-12-06T02:20:59+00:00",
+                 *         "modified": "2019-02-24T13:08:09+00:00",
+                 *         "usertype": "dfdf",
+                 *         "fcm_id": "df",
+                 *         "ios_fcm_id": "dfdf"
+                 *     }
+                 * }"
                  * */
                 if (response != null && response.length() > 0) {
                     JSONObject res = new JSONObject(response.trim());
                     JSONObject _object = res.getJSONObject("res");
                     server_status = _object.optInt("status");
                     if (server_status == 1) {
-                        JSONObject user_object = res.getJSONObject("users");
+                        JSONObject user_object = res.getJSONObject("userUpdated");
                         id = user_object.optString("id");
                         name = user_object.optString("name");
-                        email_id = user_object.optString("email_id");
+                        email_id = user_object.optString("email");
                         mobile = user_object.optString("mobile");
                         photo = user_object.optString("photo");
                         user_type = user_object.optString("usertype");
+                        password = user_object.optString("password");
                         User ulist = new User();
                         ulist.setId(id);
                         ulist.setName(name);
                         ulist.setEmail(email_id);
                         ulist.setPhoto(photo);
                         ulist.setUser_type(user_type);
+                        ulist.setUser_type(password);
                     }
-                    else if(server_status==2){
-                        server_message="The user already exits";
 
-                    }
                     else {
-                        server_message = "Error While Creating Account";
+                        server_message = "Error While Editing Account";
                     }
                 }
 
@@ -390,7 +428,20 @@ public class ProfileFragment extends Fragment {
         protected void onPostExecute(Void user) {
             super.onPostExecute(user);
             progressDialog.cancel();
-
+            if (server_status == 1) {
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0); // 0 - for private mode
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(Constants.USER_ID, id);
+                editor.putString(Constants.USER_MOBILE, mobile);
+                editor.putString(Constants.USER_NAME, name);
+                editor.putString(Constants.USER_PHOTO, photo);
+                editor.putString(Constants.USER_EMAIL, email_id);
+                editor.putString(Constants.USER_PASSWORD, password);
+                editor.commit();
+                ((Activity)getContext()).finish();
+            } else {
+                Toast.makeText(getContext(),server_message,Toast.LENGTH_LONG).show();
+            }
         }
     }
 

@@ -14,6 +14,7 @@ public class Constants {
     public static  String MAINURL = "http://theposh.online/" ;
     public static  String LOGIN ="users/loginCheck.json" ;
     public static  String SIGNUP ="users/add.json" ;
+    public static  String EDIT_PROFILE ="users/edit.json" ;
     public static  String BANNERLIST ="banners/index.json" ;
     public static  String CATEGORY_LIST ="categories/index.json" ;
     public static  String ITEMS ="items/index.json" ;

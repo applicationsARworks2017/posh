@@ -36,7 +36,7 @@ import java.net.URL;
 public class EditAddress extends AppCompatActivity {
    public static EditText et_name,et_email,et_phone,et_state,et_land,et_adres,et_pin,et_secn;
     TextView tv_save,tv_cancel;
-    String id,name,email,phone,state,land,adres,pin,city;
+    String id,name,email,phone,state,land,adres,pincode,city;
     RelativeLayout profile_add_adress;
     String user_id;
     Toolbar detail_tool;
@@ -72,6 +72,7 @@ public class EditAddress extends AppCompatActivity {
             land = extras.getString("land");
            // pin = extras.getString("pin");
             city = extras.getString("state");
+            pincode = extras.getString("pin");
             // and get whatever type user account id is
         }
         profile_add_adress=(RelativeLayout)findViewById(R.id.profile_add_adress);
@@ -91,7 +92,7 @@ public class EditAddress extends AppCompatActivity {
         et_phone.setText(phone);
         et_adres.setText(adres);
         et_land.setText(land);
-       // et_pin.setText(pin);
+        et_pin.setText(pincode);
         et_state.setText(city);
          et_pin.setOnClickListener(new View.OnClickListener() {
              @Override
