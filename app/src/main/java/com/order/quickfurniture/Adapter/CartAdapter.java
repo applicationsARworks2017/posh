@@ -14,6 +14,7 @@ import com.order.quickfurniture.Activity.CartActivity;
 import com.order.quickfurniture.Pojo.Cartlist;
 import com.order.quickfurniture.Pojo.PincodeList;
 import com.order.quickfurniture.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -44,7 +45,7 @@ public class CartAdapter extends BaseAdapter {
     }
     public class Holder{
         TextView it_name,tv_price;
-        ImageView split_minus,split_plus;
+        ImageView split_minus,split_plus,it_image;
         EditText et_qnty;
 
     }
@@ -61,6 +62,7 @@ public class CartAdapter extends BaseAdapter {
             holder.et_qnty=(EditText) view.findViewById(R.id.et_qnty);
             holder.split_minus=(ImageView)view.findViewById(R.id.minus);
             holder.split_plus=(ImageView)view.findViewById(R.id.plus);
+            holder.it_image=(ImageView)view.findViewById(R.id.it_image);
 
             view.setTag(holder);
         } else {
@@ -71,9 +73,10 @@ public class CartAdapter extends BaseAdapter {
         holder.et_qnty.setTag(i);
         holder.split_minus.setTag(holder);
         holder.split_plus.setTag(holder);
+        holder.it_image.setTag(holder);
 
 
-        holder.it_name.setText(" Name : "+_pos.getPrice());
+        holder.it_name.setText(" Name : "+_pos.getItem_name());
         holder.tv_price.setText(" RS : "+_pos.getPrice());
         holder.split_plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +116,12 @@ public class CartAdapter extends BaseAdapter {
                 // split_qty.setText(String.valueOf(qnty));
             }
         });
-
+        if(!_pos.getPhoto().isEmpty()) {
+            Picasso.with(_context).load(_pos.getPhoto()).into(holder.it_image);
+        }
+        else {
+            holder.it_image.setImageResource(R.drawable.error);
+        }
 
         return view;
     }

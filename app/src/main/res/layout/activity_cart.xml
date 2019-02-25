@@ -32,6 +32,7 @@
                 android:layout_height="100dp"
                 android:layout_marginBottom="20dp"
                 android:id="@+id/it_image"
+                android:scaleType="fitXY"
                 android:background="@drawable/icon"
                 android:layout_below="@id/it_name"
                 android:layout_marginLeft="10dp"/>
@@ -48,9 +49,9 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:id="@+id/plus"
+                    android:id="@+id/minus"
                     android:layout_gravity="center_vertical"
-                    android:background="@mipmap/baseline_add_circle_black_24"
+                    android:background="@mipmap/baseline_remove_circle_black_24"
                     android:backgroundTint="@color/colorPrimary"
                     android:padding="5dp"
                     />
@@ -67,12 +68,13 @@
                     android:padding="10dp"
                     android:background="@drawable/custombutton">
                 </EditText>
+
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:id="@+id/minus"
+                    android:id="@+id/plus"
                     android:layout_gravity="center_vertical"
-                    android:background="@mipmap/baseline_remove_circle_black_24"
+                    android:background="@mipmap/baseline_add_circle_black_24"
                     android:backgroundTint="@color/colorPrimary"
                     android:padding="5dp"
                     />

@@ -21,7 +21,7 @@ import com.order.quickfurniture.Fragment.ProfileFragment;
 import com.order.quickfurniture.R;
 
 public class HomeActivity extends AppCompatActivity {
-    RelativeLayout notificationCount1;
+    RelativeLayout notificationCount1,badge_layout2;
     public BottomNavigationView mBottomNav;
     public int mSelectedItem;
     private static final String SELECTED_ITEM = "arg_selected_item";
@@ -34,6 +34,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         notificationCount1 = (RelativeLayout) findViewById(R.id.relative_layout1);
+        badge_layout2 = (RelativeLayout) findViewById(R.id.badge_layout2);
         mBottomNav = (BottomNavigationView) findViewById(R.id.navigation);
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -59,10 +60,17 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
 
-        MenuItem item1 = menu.findItem(R.id.actionbar_item);
+        final MenuItem item1 = menu.findItem(R.id.actionbar_item);
         MenuItemCompat.setActionView(item1, R.layout.notification_update_count_layout);
         notificationCount1 = (RelativeLayout) MenuItemCompat.getActionView(item1);
+        badge_layout2 = (RelativeLayout)item1.getActionView();
 
+        badge_layout2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(item1);
+            }
+        });
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -72,16 +80,16 @@ public class HomeActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item1) {
+        switch (item1.getItemId()) {
 
 
-            case R.id.badge_layout3:
+            case R.id.actionbar_item:
                 Intent i = new Intent(HomeActivity.this, CartActivity.class);
                 startActivity(i);
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item1);
         }
     }
 

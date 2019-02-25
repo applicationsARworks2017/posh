@@ -309,8 +309,10 @@ public class APIManager {
                                         JSONObject object = jsonArray.getJSONObject(i);
                                         String quentity = object.getString("quentity");
                                         JSONObject jsonObject = object.getJSONObject(resobject_two);
+                                        String item_name=jsonObject.getString("name");
+                                        String _photo=jsonObject.getString("image");
 
-                                        new Cartlist(quentity,);
+                                        new Cartlist(quentity,item_name,_photo);
                                         //Object model = gson.fromJson(object.toString(), classType);
                                         //arrList.add(model);
                                     }

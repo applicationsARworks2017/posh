@@ -9,13 +9,46 @@ public class Cartlist {
     String table_no;
     String status;
     String order_no;
+    String quantity;
+    String item_name;
+    String photo;
 
-    /*@Override
+    public Cartlist(String quentity, String item_name, String photo) {
+        this.quantity=quentity;
+        this.item_name=item_name;
+        this.photo=photo;
+
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getItem_name() {
+        return item_name;
+    }
+
+    public void setItem_name(String item_name) {
+        this.item_name = item_name;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+    @Override
     public String toString() {
         return "ClassPojo [id = " + id + ",user_id = " + user_id + ", item_id = " + item_id  +
                 ", quentity = " + quentity + ", price = " + price+ ",status="+status+"" +
                 ",table_no="+table_no+",order_no="+order_no+"]";
-    }*/
+    }
 
     public String getId() {
         return id;

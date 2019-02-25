@@ -52,11 +52,13 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:scaleType="fitXY"
                     android:id="@+id/img1"
                    />
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:scaleType="fitXY"
                     android:id="@+id/img2"
                     android:layout_marginLeft="10dp"
                    />
@@ -64,12 +66,14 @@
                     android:layout_width="40dp"
                     android:id="@+id/img3"
                     android:layout_height="40dp"
+                    android:scaleType="fitXY"
                     android:layout_marginLeft="10dp"
                     />
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:id="@+id/img4"
+                    android:scaleType="fitXY"
                     android:layout_marginLeft="10dp"
                     />
             </LinearLayout>
@@ -96,6 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:visibility="gone"
                 android:orientation="horizontal">
                 <RatingBar
                     android:layout_width="wrap_content"
