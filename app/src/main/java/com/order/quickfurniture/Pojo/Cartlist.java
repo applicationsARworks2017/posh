@@ -1,7 +1,9 @@
 package com.order.quickfurniture.Pojo;
 
+import org.json.JSONObject;
+
 public class Cartlist {
-    String id;
+    String id,c_id,i_id,category_id,sub_category_id,item_type_id,discount,actual_price,description;
     String user_id;
     String item_id;
     String quentity;
@@ -13,11 +15,89 @@ public class Cartlist {
     String item_name;
     String photo;
 
-    public Cartlist(String quentity, String item_name, String photo) {
-        this.quantity=quentity;
-        this.item_name=item_name;
-        this.photo=photo;
 
+    public Cartlist(String c_id, String user_id, String item_id, String quentity, String price,
+                    String i_id, String category_id, String sub_category_id, String item_type_id,
+                    String name, String discount, String actual_price, String image,
+                    String description) {
+        this.quantity=quentity;
+        this.item_name=name;
+        this.photo=image;
+        this.c_id=c_id;
+        this.user_id=user_id;
+        this.item_id=item_id;
+        this.price=price;
+        this.i_id=i_id;
+        this.category_id=category_id;
+        this.sub_category_id=sub_category_id;
+        this.item_type_id=item_type_id;
+        this.discount=discount;
+        this.actual_price=actual_price;
+        this.description=description;
+    }
+
+    public String getC_id() {
+        return c_id;
+    }
+
+    public void setC_id(String c_id) {
+        this.c_id = c_id;
+    }
+
+    public String getI_id() {
+        return i_id;
+    }
+
+    public void setI_id(String i_id) {
+        this.i_id = i_id;
+    }
+
+    public String getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(String category_id) {
+        this.category_id = category_id;
+    }
+
+    public String getSub_category_id() {
+        return sub_category_id;
+    }
+
+    public void setSub_category_id(String sub_category_id) {
+        this.sub_category_id = sub_category_id;
+    }
+
+    public String getItem_type_id() {
+        return item_type_id;
+    }
+
+    public void setItem_type_id(String item_type_id) {
+        this.item_type_id = item_type_id;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public String getActual_price() {
+        return actual_price;
+    }
+
+    public void setActual_price(String actual_price) {
+        this.actual_price = actual_price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getQuantity() {

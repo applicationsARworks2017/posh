@@ -17,6 +17,8 @@ import com.order.quickfurniture.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CartAdapter extends BaseAdapter {
 
@@ -76,7 +78,7 @@ public class CartAdapter extends BaseAdapter {
         holder.it_image.setTag(holder);
 
 
-        holder.it_name.setText(" Name : "+_pos.getItem_name());
+        holder.it_name.setText(_pos.getItem_name());
         holder.tv_price.setText(" RS : "+_pos.getPrice());
         holder.split_plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,12 +118,19 @@ public class CartAdapter extends BaseAdapter {
                 // split_qty.setText(String.valueOf(qnty));
             }
         });
-        if(!_pos.getPhoto().isEmpty()) {
-            Picasso.with(_context).load(_pos.getPhoto()).into(holder.it_image);
+
+        if(_pos.getPhoto().contains(",")) {
+            List<String> imageList = Arrays.asList(_pos.getPhoto().split(","));
+
+            if (imageList.get(0) == null || imageList.get(0) == "" || imageList.get(0).contentEquals("")) {
+                holder.it_image.setImageResource(R.drawable.error);
+
+            } else {
+                Picasso.with(_context).load(imageList.get(0)).into(holder.it_image);
+            }
         }
-        else {
-            holder.it_image.setImageResource(R.drawable.error);
-        }
+
+
 
         return view;
     }

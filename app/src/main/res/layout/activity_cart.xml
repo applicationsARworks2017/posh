@@ -20,9 +20,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
                 android:text="Item Name"
-                android:textStyle="bold"
                 android:id="@+id/it_name"
                 android:textSize="15dp"
                 android:layout_margin="10dp"/>
@@ -33,7 +31,6 @@
                 android:layout_marginBottom="20dp"
                 android:id="@+id/it_image"
                 android:scaleType="fitXY"
-                android:background="@drawable/icon"
                 android:layout_below="@id/it_name"
                 android:layout_marginLeft="10dp"/>
             <LinearLayout
@@ -95,7 +92,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
                 android:text="Rs. 1100"
-                android:textStyle="bold"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="10dp"
                 android:layout_alignParentRight="true"

@@ -9,19 +9,116 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:id="@+id/cart_tool"></android.support.v7.widget.Toolbar>
+        android:id="@+id/cart_tool">
+
+    </android.support.v7.widget.Toolbar>
+
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/order_swipe"
         android:layout_below="@+id/cart_tool">
-    <ListView
+
+        <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:divider="@null"
         android:id="@+id/lv_cart">
+        </ListView>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingLeft="20dp"
+            android:id="@+id/rel_price"
+            android:layout_below="@+id/lv_cart">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PRICE DETAILS"
+                android:paddingBottom="20dp"
+                android:paddingTop="5dp"
+                android:id="@+id/price_details"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@+id/price_details"
+                android:background="@drawable/customborder"
+                android:backgroundTint="@color/colorPrimary"
+                android:id="@+id/tv_border"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_border"
+                android:paddingTop="5dp"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/tv_price"
+                android:text="Price(4 items)"/>
+            <TextView
+                android:id="@+id/tv_price1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="rs 65655"
+                android:layout_below="@+id/tv_border"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_price"
+                android:paddingTop="5dp"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/tv_delivery"
+                android:text="Delivery"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="Free"
+                android:id="@+id/delivery1"
+                android:layout_below="@+id/tv_price1"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="5dp"
+                android:layout_below="@+id/delivery1"
+                android:background="@drawable/customborder1"
+                android:id="@+id/c"/>
 
-    </ListView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/c"
+                android:paddingTop="5dp"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/tv_payble"
+                android:text="Amount Payable"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="Rs. 1800"
+                android:id="@+id/payble_price"
+                android:layout_below="@+id/c"
+                />
+
+        </RelativeLayout>
+
     </android.support.v4.widget.SwipeRefreshLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,4 +126,40 @@
         android:text="No Cart for Today"
         android:layout_centerInParent="true"
         android:visibility="gone"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:id="@+id/rel_cont"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/order_swipe"
+        android:background="@color/colorWhite"
+        android:layout_marginTop="20dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="20dp"
+            android:id="@+id/tv_total_price"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/colour_black"
+            android:text="Rs. 5656"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:text="CONTINUE"
+            android:id="@+id/btn_continue"
+            android:paddingRight="20dp"
+            android:layout_centerInParent="true"
+            android:paddingLeft="20dp"
+            android:background="@drawable/customborder"/>
+
+    </RelativeLayout>
+
 </RelativeLayout>

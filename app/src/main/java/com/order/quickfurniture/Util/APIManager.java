@@ -312,7 +312,7 @@ public class APIManager {
                                         String item_name=jsonObject.getString("name");
                                         String _photo=jsonObject.getString("image");
 
-                                        new Cartlist(quentity,item_name,_photo);
+                                        //new Cartlist(quentity,item_name,_photo);
                                         //Object model = gson.fromJson(object.toString(), classType);
                                         //arrList.add(model);
                                     }
