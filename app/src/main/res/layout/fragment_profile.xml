@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/profile_scroll"
-        android:visibility="gone">
+        android:visibility="visible">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -105,8 +105,6 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:paddingLeft="5dp"
-                        android:editable="true"
-                        android:focusable="true"
                         android:inputType="text"
                         android:id="@+id/tv_fullname"
                         android:paddingRight="5dp"/>
@@ -121,8 +119,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:editable="true"
-                        android:focusable="true"
                         android:inputType="textEmailAddress"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
@@ -141,8 +137,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:inputType="number"
-                        android:focusable="true"
-                        android:editable="true"
                         android:maxLength="10"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
@@ -168,16 +162,34 @@
                         android:text="******"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp" />
-                    <Button
-                        android:layout_width="100dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="10dp"
-                        android:id="@+id/bt_edit"
-                        android:background="@drawable/customlogin"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:textColor="@color/colorWhite"
-                        android:text="EDIT"
-                        android:visibility="visible"/>
+                        android:orientation="horizontal">
+                        <Button
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/bt_edit"
+                            android:background="@drawable/customlogin"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@color/colorWhite"
+                            android:text="EDIT"
+                            android:visibility="visible"/>
+                        <Button
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/bt_logout"
+                            android:layout_marginLeft="40dp"
+                            android:background="@drawable/customlogout"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@color/colorWhite"
+                            android:text="LOGOUT"
+                            android:visibility="visible"/>
+                    </LinearLayout>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

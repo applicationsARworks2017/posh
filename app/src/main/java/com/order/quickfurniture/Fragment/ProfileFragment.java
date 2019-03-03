@@ -1,9 +1,11 @@
 package com.order.quickfurniture.Fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -62,7 +64,7 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     String user_id,user_name,user_email,user_phone,user_password;
-    Button login,signup,bt_edit;
+    Button login,signup,bt_edit,bt_logout;
     RelativeLayout profile_lay;
     ScrollView profile_scroll;
     TextView tv_address,tv_chage_password,tv_edit;
@@ -114,6 +116,7 @@ public class ProfileFragment extends Fragment {
         user_phone = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_MOBILE, null);
         login = (Button)view.findViewById(R.id.login);
         signup = (Button)view.findViewById(R.id.signup);
+        bt_logout = (Button)view.findViewById(R.id.bt_logout);
         bt_edit = (Button)view.findViewById(R.id.bt_edit);
         profile_lay=(RelativeLayout)view.findViewById(R.id.profile_lay);
         profile_scroll=(ScrollView)view.findViewById(R.id.profile_scroll);
@@ -146,39 +149,53 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        bt_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
         bt_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv_fullname.setEnabled(true);
-                tv_fullname.setFocusable(true);
-                tv_email.setEnabled(true);
-                tv_email.setFocusable(true);
-                tv_phone.setEnabled(true);
-                tv_phone.setFocusable(true);
-                String name = tv_fullname.getText().toString().trim();
-                String email = tv_email.getText().toString().trim();
-                String phone = tv_phone.getText().toString().trim();
-                if (tv_fullname.getText().toString().trim().length() <= 0) {
-                    tv_fullname.setError("Enter Full Name");
-                } else if (tv_email.getText().toString().trim().length() <= 0) {
-                    tv_email.setError("Enter Email");
-                } else if (tv_phone.getText().toString().trim().length() < 10) {
-                    tv_phone.setError("Enter Valid Phone Number");
+                if(bt_edit.getText().toString().trim().contentEquals("EDIT")) {
+                    tv_fullname.setEnabled(true);
+                    tv_email.setEnabled(true);
+                    tv_phone.setEnabled(true);
+                    bt_edit.setText("SAVE");
                 }
                 else {
-                    Edit_asyn signup_asyn = new Edit_asyn();
-                    signup_asyn.execute(user_id,user_password, name, email, phone);
+                    String name = tv_fullname.getText().toString().trim();
+                    String email = tv_email.getText().toString().trim();
+                    String phone = tv_phone.getText().toString().trim();
+                    if (tv_fullname.getText().toString().trim().length() <= 0) {
+                        tv_fullname.setError("Enter Full Name");
+                    } else if (tv_email.getText().toString().trim().length() <= 0) {
+                        tv_email.setError("Enter Email");
+                    } else if (tv_phone.getText().toString().trim().length() < 10) {
+                        tv_phone.setError("Enter Valid Phone Number");
+                    }
+                    else {
+                        Edit_asyn signup_asyn = new Edit_asyn();
+                        signup_asyn.execute(user_id, user_password, name, email, phone);
+                    }
+                    tv_fullname.setEnabled(false);
+                    tv_email.setEnabled(false);
+                    tv_phone.setEnabled(false);
+                    bt_edit.setText("EDIT");
+
                 }
             }
         });
 
-        if(user_id!=""||user_id!=null){
-            profile_lay.setVisibility(View.INVISIBLE);
-            profile_scroll.setVisibility(View.VISIBLE);
+        if(user_id == null || user_id.contentEquals("null")){
+            profile_lay.setVisibility(View.VISIBLE);
+            profile_scroll.setVisibility(View.GONE);
         }
         else {
-            profile_lay.setVisibility(View.VISIBLE);
-            profile_scroll.setVisibility(View.INVISIBLE);
+            profile_lay.setVisibility(View.GONE);
+            profile_scroll.setVisibility(View.VISIBLE);
+
         }
 //        String upperString = user_name.substring(0,1).toUpperCase() + user_name.substring(1);
         tv_fullname.setText(user_name);
@@ -208,16 +225,7 @@ public class ProfileFragment extends Fragment {
                             Edit_asyn signup_asyn = new Edit_asyn();
                             signup_asyn.execute(user_id,new_pas,name,email,phone);
                         }
-                       /* if(user_password.contentEquals(old_pas)){
-                            SharedPreferences sharedPreferences = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0); // 0 - for private mode
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString(Constants.USER_PASSWORD, new_pas);
-                            editor.commit();
-                            //CheckServer();
-                        }
-                        else{
-                            Toast.makeText(getContext(),"Incorrect password",Toast.LENGTH_LONG).show();
-                        }*/
+                        dialog.dismiss();
                     }
                 });
                 dialog.show();
@@ -232,6 +240,33 @@ public class ProfileFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void logout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Do you want to logout ?")
+                .setCancelable(false)
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0); // 0 - for private mode
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.commit();
+                        Intent intent=new Intent(getActivity(),LoginActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -328,7 +363,7 @@ public class ProfileFragment extends Fragment {
                         .appendQueryParameter("name", _name)
                         .appendQueryParameter("email", _email)
                         .appendQueryParameter("mobile", _phone)
-                        .appendQueryParameter("fcm_id", "")
+                        //.appendQueryParameter("fcm_id", "")
                         .appendQueryParameter("usertype", "user");
 
                 //.appendQueryParameter("deviceid", deviceid);
@@ -446,6 +481,7 @@ public class ProfileFragment extends Fragment {
                 tv_fullname.setEnabled(false);
                 tv_email.setEnabled(false);
                 tv_phone.setEnabled(false);
+                Toast.makeText(getContext(),"Updated",Toast.LENGTH_LONG).show();
                 //((Activity)getContext()).finish();
             } else {
                 Toast.makeText(getContext(),server_message,Toast.LENGTH_LONG).show();

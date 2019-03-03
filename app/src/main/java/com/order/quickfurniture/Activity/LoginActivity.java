@@ -196,12 +196,12 @@ public class LoginActivity extends AppCompatActivity {
                     if(server_status==1) {
                         id=user_object.optString("id");
                         name = user_object.optString("name");
-                        email_id = user_object.optString("email_id");
+                        email_id = user_object.optString("email");
                         mobile = user_object.optString("mobile");
                         photo = user_object.optString("photo");
                         user_type = user_object.optString("usertype");
                         server_message=res.optString("message");
-                        password=res.optString(password);
+                        password=user_object.optString("password");
                         User ulist=new User();
                         ulist.setId(id);
                         ulist.setName(name);
