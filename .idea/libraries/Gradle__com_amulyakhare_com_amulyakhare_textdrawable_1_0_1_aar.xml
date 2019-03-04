@@ -5,6 +5,8 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/com.amulyakhare.textdrawable-1.0.1.aar/c75f557dec27c1586c6bd74eb2c02163/res" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.amulyakhare/com.amulyakhare.textdrawable/1.0.1/464f77c149aad9f5dbb3aaf846cd52d57b61df4b/com.amulyakhare.textdrawable-1.0.1-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

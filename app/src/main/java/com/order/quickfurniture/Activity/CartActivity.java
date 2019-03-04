@@ -80,7 +80,6 @@ public class CartActivity extends AppCompatActivity {
         swipe_order.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipe_order.setRefreshing(false);
                 getCartList();
 
             }
@@ -99,7 +98,8 @@ public class CartActivity extends AppCompatActivity {
 
     }
 
-    private void getCartList() {
+    public void getCartList() {
+        swipe_order.setRefreshing(false);
         if(CheckInternet.getNetworkConnectivityStatus(CartActivity.this)){
             //calltoAPI(user_id);
             new getCartlist().execute(user_id);
@@ -301,4 +301,5 @@ public class CartActivity extends AppCompatActivity {
             }
         }
     }
+
 }

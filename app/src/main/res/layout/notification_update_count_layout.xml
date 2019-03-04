@@ -67,7 +67,6 @@
             android:layout_alignRight="@id/relative_layout_item_count1_addcart"
             android:background="@android:drawable/ic_notification_overlay"
             android:text="12"
-            android:visibility="gone"
             android:textColor="#FFF"
             android:textSize="10sp"
             android:textStyle="bold" />

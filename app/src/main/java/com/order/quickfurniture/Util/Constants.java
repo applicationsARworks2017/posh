@@ -36,6 +36,7 @@ public class Constants {
     public static  String CHECK_PINCODE ="Pincodes/index.json" ;
     public static  String ADD_CART ="carts/add.json" ;
     public static  String CART_LIST ="carts/index.json" ;
+    public static  String CART_DELETE ="carts/delete.json" ;
     public static Boolean IS_LOGIN;
 
     public static void  NointernetDialog(Activity activity){
