@@ -1,6 +1,7 @@
 package com.order.quickfurniture.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.order.quickfurniture.Adapter.AddressAdapter;
 import com.order.quickfurniture.Adapter.CartAdapter;
+import com.order.quickfurniture.Adapter.NewCartAdapter;
 import com.order.quickfurniture.Pojo.AddRessList;
 import com.order.quickfurniture.Pojo.Cartlist;
 import com.order.quickfurniture.R;
@@ -48,8 +51,9 @@ public class CartActivity extends AppCompatActivity {
     ListView lv_cart;
     RelativeLayout rel;
     ArrayList<Cartlist> cList;
-    CartAdapter c_Adapter;
+    NewCartAdapter c_Adapter;
     SwipeRefreshLayout swipe_order;
+    Button contine;
     TextView no_cart;
 
 
@@ -84,7 +88,7 @@ public class CartActivity extends AppCompatActivity {
 
             }
         });
-
+        contine = (Button)findViewById(R.id.contine);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -92,7 +96,13 @@ public class CartActivity extends AppCompatActivity {
             // and get whatever type user account id is
         }
 
-
+        contine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CartActivity.this,ConfirmAddress.class);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -293,7 +303,7 @@ public class CartActivity extends AppCompatActivity {
             super.onPostExecute(data);
             progressDialog.dismiss();
             if(server_status==1) {
-                c_Adapter = new CartAdapter(CartActivity.this,cList );
+                c_Adapter = new NewCartAdapter(CartActivity.this,cList );
                 lv_cart.setAdapter(c_Adapter);
             }
             else{

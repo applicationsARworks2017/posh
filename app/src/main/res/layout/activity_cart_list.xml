@@ -14,10 +14,14 @@
     </android.support.v7.widget.Toolbar>
 
 
+
+
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/order_swipe"
+        android:layout_marginBottom="50dp"
         android:layout_below="@+id/cart_tool">
 
         <ListView
@@ -26,6 +30,7 @@
         android:divider="@null"
         android:id="@+id/lv_cart">
         </ListView>
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -161,5 +166,12 @@
             android:background="@drawable/customborder"/>
 
     </RelativeLayout>
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:text="Continue"
+        android:id="@+id/contine"
+        android:textColor="@color/colorWhite"/>
 </RelativeLayout>
