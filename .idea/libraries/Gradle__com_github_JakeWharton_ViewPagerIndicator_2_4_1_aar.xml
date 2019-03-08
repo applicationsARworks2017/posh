@@ -1,10 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.JakeWharton:ViewPagerIndicator:2.4.1@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ViewPagerIndicator-2.4.1.aar/165080be185733e80eb1521c472c3c08/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ViewPagerIndicator-2.4.1.aar/165080be185733e80eb1521c472c3c08/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ViewPagerIndicator-2.4.1.aar/7fd3e3c124d0942d426ee63612160c6e/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ViewPagerIndicator-2.4.1.aar/7fd3e3c124d0942d426ee63612160c6e/res" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.JakeWharton/ViewPagerIndicator/2.4.1/10b5915b5f2eb2fe91ba6df68f99a3ded4e98178/ViewPagerIndicator-2.4.1-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

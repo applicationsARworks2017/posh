@@ -41,7 +41,7 @@ public class ConAddressAdapter extends BaseAdapter {
     }
 
     private class Holder{
-
+        TextView c_name,c_mobile,c_landmark,c_locality,c_address,c_pin;
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -51,11 +51,31 @@ public class ConAddressAdapter extends BaseAdapter {
             LayoutInflater mInflater = (LayoutInflater) context
                     .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.coadres_list, parent, false);
+            holder.c_name=convertView.findViewById(R.id.c_name);
+            holder.c_mobile=convertView.findViewById(R.id.c_mobile);
+            holder.c_landmark=convertView.findViewById(R.id.c_landmark);
+            holder.c_locality=convertView.findViewById(R.id.c_locality);
+            holder.c_address=convertView.findViewById(R.id.c_address);
+            holder.c_pin=convertView.findViewById(R.id.c_pin);
             convertView.setTag(holder);
         } else {
             holder = (Holder) convertView.getTag();
         }
-        holder.tv_ed_de.setTag(position);
+        holder.c_name.setTag(position);
+        holder.c_mobile.setTag(position);
+        holder.c_landmark.setTag(position);
+        holder.c_locality.setTag(position);
+        holder.c_address.setTag(position);
+        holder.c_pin.setTag(position);
+
+        holder.c_name.setText("Name: "+_pos.getFull_name());
+        holder.c_mobile.setText("Mobile: "+_pos.getMobile());
+        holder.c_landmark.setText("Landmark: "+_pos.getLandmark());
+        holder.c_locality.setText("Locality: "+_pos.getLocality());
+        holder.c_address.setText("Address: "+_pos.getAddress());
+        holder.c_pin.setText("City: "+_pos.getCity()+ " - "+_pos.getPincode());
+
+
         return convertView;
     }
 }

@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -43,6 +45,21 @@ public class ConfirmAddress extends AppCompatActivity {
         user_id =getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_ID, null);
 
         getAddress();
+
+        add_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AddRessList items= (AddRessList) parent.getItemAtPosition(position);
+                //  Toast.makeText(AdminUserList.this,users.getUser_name(),Toast.LENGTH_LONG).show();
+                String address_id = items.getId();
+                String sub_cat_name = items.getTitle();
+                /*Intent intent = new Intent(getActivity(),ItemList.class);
+                intent.putExtra("SUBCAT_ID",sub_catid);
+                intent.putExtra("SUBCAT_NAME",sub_cat_name);
+                startActivity(intent);*/
+            }
+        });
+
     }
 
     private void getAddress() {
