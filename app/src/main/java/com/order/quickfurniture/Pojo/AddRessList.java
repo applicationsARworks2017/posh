@@ -10,13 +10,22 @@ public class AddRessList {
     private String landmark;
     private String city;
     private String email;
+    private String charge;
 
 
 
     private String pincode;
 
+    public String getCharge() {
+        return charge;
+    }
+
+    public void setCharge(String charge) {
+        this.charge = charge;
+    }
+
     public AddRessList(String id, String full_name, String mobile, String pincode_id, String address, String locality,
-                       String landmark, String city, String email,String pincode) {
+                       String landmark, String city, String email, String pincode, String charge) {
      this.id=id;
      this.full_name=full_name;
      this.mobile=mobile;
@@ -27,6 +36,7 @@ public class AddRessList {
      this.landmark=landmark;
      this.city=city;
      this.email=email;
+     this.charge = charge;
     }
     public String getPincode() {
         return pincode;

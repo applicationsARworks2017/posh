@@ -1,6 +1,10 @@
 package com.order.quickfurniture.Activity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -51,8 +55,35 @@ public class ConfirmAddress extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 AddRessList items= (AddRessList) parent.getItemAtPosition(position);
                 //  Toast.makeText(AdminUserList.this,users.getUser_name(),Toast.LENGTH_LONG).show();
-                String address_id = items.getId();
-                String sub_cat_name = items.getTitle();
+                final String address_id = items.getId();
+                String address = items.getAddress()+","+items.getPincode();
+                final String pincode_id = items.getPincode_id();
+                final String delivery_charge = items.getCharge();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmAddress.this);
+                builder.setMessage("Address:"+address)
+                        .setCancelable(false)
+                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent intent = new Intent(ConfirmAddress.this,Calculation.class);
+                                intent.putExtra("ADDRESSID",address_id);
+                                intent.putExtra("PINID",pincode_id);
+                                intent.putExtra("DELIVERY",delivery_charge);
+                                startActivity(intent);
+
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+
+
+               // String sub_cat_name = items.getTitle();
                 /*Intent intent = new Intent(getActivity(),ItemList.class);
                 intent.putExtra("SUBCAT_ID",sub_catid);
                 intent.putExtra("SUBCAT_NAME",sub_cat_name);
@@ -188,8 +219,9 @@ public class ConfirmAddress extends AppCompatActivity {
                             String email = o_list_obj.getString("email");
                             JSONObject mypincode = o_list_obj.getJSONObject("pincode");
                             String pincode = mypincode.getString("pin");
+                            String charge = mypincode.getString("charge");
                             AddRessList list1 = new AddRessList(id, full_name, mobile, pincode_id, address,
-                                    locality, landmark, city, email, pincode);
+                                    locality, landmark, city, email, pincode,charge);
                             addresList.add(list1);
                         }
                     }

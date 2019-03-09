@@ -11,8 +11,10 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.ConfirmAddress"
-            android:label="Select One address"></activity>
+        <activity android:name=".Activity.Calculation"></activity>
+        <activity
+            android:name=".Activity.ConfirmAddress"
+            android:label="Select One address" />
         <activity
             android:name=".Activity.Getpincode"
             android:theme="@style/NoAction" />

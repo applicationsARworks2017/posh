@@ -3,6 +3,7 @@ package com.order.quickfurniture.Adapter;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -167,6 +168,11 @@ public class NewCartAdapter extends BaseAdapter {
                     public void onSuccess(Object resultObj) {
                         Toast.makeText(_context,"Item Deleted", Toast.LENGTH_LONG).show();
                         pd.dismiss();
+                        Intent intent = new Intent(_context,CartActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        _context.startActivity(intent);
                         //new CartActivity().getCartList();
                     }
 

@@ -31,6 +31,7 @@ public class Constants {
     public static  String HOME_ITEM ="Items/otherList.json" ;
     public static  String ITEM_DETAILS ="items/view.json" ;
     public static  String ADDRESS_LIST ="Addresses/index.json" ;
+    public static  String TAX_DETAILS ="Taxes/index.json" ;
     public static  String ADD_ADDRESS ="Addresses/add.json" ;
     public static  String DELETE_ADDRESS ="Addresses/delete.json" ;
     public static  String CHECK_PINCODE ="Pincodes/index.json" ;

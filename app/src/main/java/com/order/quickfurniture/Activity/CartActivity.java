@@ -55,6 +55,7 @@ public class CartActivity extends AppCompatActivity {
     SwipeRefreshLayout swipe_order;
     Button contine;
     TextView no_cart;
+    public static Double total_amount = 0.0;
 
 
     @Override
@@ -71,6 +72,9 @@ public class CartActivity extends AppCompatActivity {
         cart_tool.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //finish();
+                Intent intent = new Intent(CartActivity.this,HomeActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -271,7 +275,7 @@ public class CartActivity extends AppCompatActivity {
                             String item_id = o_list_obj.getString("item_id");
                             String quentity = o_list_obj.getString("quentity");
                             String price = o_list_obj.getString("price");
-
+                            total_amount = total_amount + Double.valueOf(price);
                             JSONObject i_list=o_list_obj.getJSONObject("item");
 
                             String i_id = i_list.getString("id");
