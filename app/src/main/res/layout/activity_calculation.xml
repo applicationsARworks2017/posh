@@ -119,6 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/tv_total"
+                android:textColor="@color/colour_black"
                 android:layout_centerVertical="true"
                 android:text="Item price"/>
             <TextView
@@ -129,7 +130,17 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="20dp"
                 android:layout_centerVertical="true"
+                android:textColor="@color/colour_black"
                 android:text="Rs. 200/-"/>
         </RelativeLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="30dp"
+            android:background="@color/colorPrimary"
+            android:text="Place Order"
+            android:textColor="@color/colorWhite"
+            android:id="@+id/place_order"/>
     </LinearLayout>
 </RelativeLayout>

@@ -285,8 +285,9 @@ public class GetAddress extends AppCompatActivity {
                         String email = o_list_obj.getString("email");
                         JSONObject mypincode = o_list_obj.getJSONObject("pincode");
                         String pincode = mypincode.getString("pin");
+                        String charge = mypincode.getString("charge");
                         AddRessList list1 = new AddRessList(id,full_name,mobile,pincode_id,address,
-                                locality,landmark,city,email,pincode);
+                                locality,landmark,city,email,pincode,charge);
                         addresList.add(list1);
                     }
                 }

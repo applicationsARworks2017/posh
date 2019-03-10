@@ -38,6 +38,8 @@ public class Constants {
     public static  String ADD_CART ="carts/add.json" ;
     public static  String CART_LIST ="carts/index.json" ;
     public static  String CART_DELETE ="carts/delete.json" ;
+    public static  String CONFIRM_ORDER ="cart-summaries/add.json" ;
+    public static  String ORDER_LIST ="cart-summaries/index.json" ;
     public static Boolean IS_LOGIN;
 
     public static void  NointernetDialog(Activity activity){

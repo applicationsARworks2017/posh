@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.Calculation"></activity>
+        <activity android:name=".Activity.Calculation"
+            android:parentActivityName=".Activity.HomeActivity"></activity>
         <activity
             android:name=".Activity.ConfirmAddress"
             android:label="Select One address" />

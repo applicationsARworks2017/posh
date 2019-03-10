@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.order.quickfurniture.Fragment.CategoryFragment;
 import com.order.quickfurniture.Fragment.HomeFragment;
+import com.order.quickfurniture.Fragment.OrdersFragment;
 import com.order.quickfurniture.Fragment.ProfileFragment;
 import com.order.quickfurniture.R;
 
@@ -112,6 +113,11 @@ public class HomeActivity extends AppCompatActivity {
 
             case R.id.profile:
                 frag=new ProfileFragment();
+                item.setCheckable(true);
+                break;
+
+                case R.id.track:
+                frag=new OrdersFragment();
                 item.setCheckable(true);
                 break;
 

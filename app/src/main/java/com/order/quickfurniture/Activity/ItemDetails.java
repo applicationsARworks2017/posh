@@ -84,7 +84,6 @@ public class ItemDetails extends AppCompatActivity {
         if (extras != null) {
             _id = extras.getString("_ID");
             _name = extras.getString("_NAME");
-            _price = extras.getString("_PRICE");
             // and get whatever type user account id is
         }
         user_id =getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_ID, null);
@@ -256,6 +255,7 @@ public class ItemDetails extends AppCompatActivity {
                                 sub_category_id = item_object.optString("sub_category_id");
                                 item_type_id = item_object.optString("item_type_id");
                                 price = item_object.optString("price");
+                                _price = price;
                                 discount = item_object.optString("discount");
                                 actual_price = item_object.optString("actual_price");
                                 image = item_object.optString("image");
